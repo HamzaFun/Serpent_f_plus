@@ -1,4 +1,5 @@
 #include "jeu.h"
+#include "murpart.h"
 
 #include <QApplication>
 
@@ -10,7 +11,7 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     jeu = new Jeu();
     jeu->show();
-    jeu->afficherMenu("Serpent Pro", "Jouer");
+    jeu->afficherMenu("Jeu Serpent ", "Jouer");
 
     return a.exec();
 }

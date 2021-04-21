@@ -3,9 +3,11 @@
 
 #include <QGraphicsPixmapItem>
 
-class SerpPart : public QGraphicsPixmapItem
+class SerpPart :public QObject, public QGraphicsPixmapItem
 {
+    Q_OBJECT
 public:
+
     SerpPart(QGraphicsItem* parent=0);
 
     SerpPart* Preced();
@@ -33,6 +35,8 @@ private:
     SerpPart* suiv;
     SerpPart* preced;
     QString direction;
+signals :
+    void manger();
 };
 
 #endif // SERPPART_H

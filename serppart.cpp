@@ -1,6 +1,7 @@
 #include "serppart.h"
 #include "fruit.h"
 #include "jeu.h"
+#include "murpart.h"
 #include <QList>
 #include <QDebug>
 
@@ -111,15 +112,14 @@ void SerpPart::checkCollidingObject()
             QPointF foodCenter(f->x()+10,f->y()+10);
             QLineF ln(thisCenter,foodCenter);
             if(ln.length() == 0){
-                jeu->serp->ajoutePart();
-//           (*jeu->serp->nbrFruit)--;
-           jeu->sceneDeJeu->removeItem(f);
-//           jeu->score->setScore(jeu->score->getScore()+f->score);
-           delete f;
+                emit manger();
+                jeu->serp->ajoutePart(); 
+                jeu->sceneDeJeu->removeItem(f);
+                delete f;
             }
         }
         else if(coll[i]) {
-            if(typeid(*coll[i])== typeid(SerpPart))
+            if(typeid(*coll[i])== typeid(SerpPart) || typeid(*coll[i]) == typeid (MurPart))
                 jeu->finJeu();
 
             return;

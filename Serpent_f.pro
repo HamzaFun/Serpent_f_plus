@@ -14,6 +14,8 @@ SOURCES += \
     fruit.cpp \
     jeu.cpp \
     main.cpp \
+    murpart.cpp \
+    obstacles.cpp \
     serppart.cpp
 
 HEADERS += \
@@ -21,6 +23,8 @@ HEADERS += \
     button.h \
     fruit.h \
     jeu.h \
+    murpart.h \
+    obstacles.h \
     serppart.h
 
 # Default rules for deployment.
