@@ -9,7 +9,8 @@ public:
     Obstacles(int Num,QGraphicsItem* parent=0);
     void ajouterMurPart(int x,int y);
     QString type;
-
+    int ObsCourant;
+    int maxScore;
 private:
     void crearObs1();
     void crearObs2();

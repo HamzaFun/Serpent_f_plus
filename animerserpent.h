@@ -13,6 +13,7 @@ public:
     void keyPressEvent(QKeyEvent *event);
     void ajoutePart();
     void animer();
+    QTimer* t;
 
 
 public slots:
@@ -24,7 +25,6 @@ private:
     SerpPart* serpTete;
     SerpPart* serpQueue;
     QString direction;
-    QTimer* t;
     QGraphicsTextItem* text;
 
 };

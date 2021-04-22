@@ -29,14 +29,15 @@ public:
     QString image;
     void setImage(QString valeur);
     int pas;
+    int l=5;
 
 private:
-
     SerpPart* suiv;
     SerpPart* preced;
     QString direction;
 signals :
     void manger();
+    void mangerF();
 };
 
 #endif // SERPPART_H

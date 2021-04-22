@@ -59,7 +59,7 @@ void SerpPart::move()
         if(this->y() >= 600){
             this->setY(0);
         }
-        else if(this->y()<0){
+        else if(this->y() < 0){
             this->setY(600);
         }
         else if(this->x() < 0){
@@ -104,7 +104,7 @@ void SerpPart::checkCollidingObject()
 {
     QList <QGraphicsItem* > coll = this->collidingItems();
 
-//    qDebug() << "colliding";
+//
     for(int i = 0, n = coll.length(); i< n; ++i){
         Fruit* f = dynamic_cast<Fruit *>(coll[i]);
         if(f) {
@@ -112,10 +112,20 @@ void SerpPart::checkCollidingObject()
             QPointF foodCenter(f->x()+10,f->y()+10);
             QLineF ln(thisCenter,foodCenter);
             if(ln.length() == 0){
-                emit manger();
+
                 jeu->serp->ajoutePart(); 
                 jeu->sceneDeJeu->removeItem(f);
+                jeu->score->setScore(jeu->score->getScore()+ f->score);
                 delete f;
+                if(jeu->score->getScore() == l){
+                    emit mangerF();
+                    l += 5;
+                }else{
+                    emit manger();
+                }
+                if(jeu->obs->maxScore <= jeu->score->getScore()){
+                    jeu->finJeu();
+                }
             }
         }
         else if(coll[i]) {

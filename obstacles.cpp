@@ -3,12 +3,15 @@
 
 Obstacles::Obstacles(int Num,QGraphicsItem* parent):QGraphicsRectItem(parent)
 {
+    ObsCourant = Num;
     switch(Num){
     case 1:
         crearObs1();
+        maxScore = 10;
         break;
     case 2:
         crearObs2();
+        maxScore = 5;
         break;
     default:
         break;
@@ -52,8 +55,33 @@ void Obstacles::crearObs1()
 void Obstacles::crearObs2()
 {
     MurPart* mur = new MurPart(this);
-    mur->setPos(1200-mur->boundingRect().width(),0);
-
+    mur->setPos(0,0);
+    int s=40;
+    for(int i =0; i < 29; ++i){
+        ajouterMurPart(s,0);
+        ajouterMurPart(s,560);
+        s+=40;
+    }
+    s=40;
+    for(int i =0; i < 4; ++i){
+        ajouterMurPart(0,s);
+        ajouterMurPart(1160,s);
+        s+=40;
+    }
+    s=400;
+    for(int i =0; i < 5; ++i){
+        ajouterMurPart(0,s);
+        ajouterMurPart(1160,s);
+        s+=40;
+    }
+    s=320;
+    for(int i =0; i < 14; ++i){
+        ajouterMurPart(s,160);
+        ajouterMurPart(s,400);
+        s+=40;
+    }
     MurPart* mur1 = new MurPart(this);
-    mur1->setPos(1200-2*mur->boundingRect().width(),0);
+    mur1->setPos(mur->boundingRect().width(),0);
 }
+
+

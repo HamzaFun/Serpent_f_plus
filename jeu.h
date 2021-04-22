@@ -5,6 +5,7 @@
 #include "animerserpent.h"
 #include "button.h"
 #include "obstacles.h"
+#include "score.h"
 
 class Jeu : public QGraphicsView
 {
@@ -12,6 +13,7 @@ class Jeu : public QGraphicsView
 public:
     Jeu(QWidget* parent=0);
     void keyPressEvent(QKeyEvent *event);
+    Score* score;
     QGraphicsScene* sceneDeJeu;
     AnimerSerpent* serp;
     AnimerSerpent* serp2;
@@ -19,6 +21,8 @@ public:
 
     void afficherMenu(QString titre, QString jouer);
     QGraphicsTextItem* titreText = NULL;
+    QGraphicsTextItem* pauseText = NULL;
+    QGraphicsTextItem* choixText = NULL;
     QGraphicsTextItem* stagesText = NULL;
     Obstacles* obs = NULL;
     Button* b;
@@ -29,9 +33,11 @@ public slots:
     void debut();
     void creerObs(int);
     void afficherStages();
+    void afficherPause();
+    void choix();
     void retourAffich();
-signals:
-    void customObs(int);
+    void commancer();
+    void routeurMenu();
 
 };
 

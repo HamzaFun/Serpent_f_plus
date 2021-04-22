@@ -21,10 +21,12 @@ AnimerSerpent::AnimerSerpent(QGraphicsItem* parent):QGraphicsRectItem(parent)
 
     t = new QTimer();
     connect(t, SIGNAL(timeout()), this, SLOT(move()));
+//    for(int i=0;i< 20;++i){
     ajouterFruit();
-
+//}
 
     connect( serpTete, SIGNAL(manger()), this, SLOT(ajouterFruit()));
+    connect( serpTete, SIGNAL(mangerF()), this, SLOT(ajouterFruit2()));
 
 
 
@@ -35,7 +37,11 @@ AnimerSerpent::AnimerSerpent(QGraphicsItem* parent):QGraphicsRectItem(parent)
     ajoutePart();
     ajoutePart();
 
-//    text = new QGraphicsTextItem(this);
+    text = new QGraphicsTextItem(this);
+    text->setVisible(true);
+    text->setPlainText("Puiez sur Espace pour continue");
+    text->setPos(650,250);
+    text->setFont(QFont("",14));
 
 
 }
@@ -43,50 +49,40 @@ AnimerSerpent::AnimerSerpent(QGraphicsItem* parent):QGraphicsRectItem(parent)
 void AnimerSerpent::keyPressEvent(QKeyEvent *event)
 {
     if(event->key() == Qt::Key_Down && serpTete->Direction() != "UP") {
-      //  snake->setY(snake->y()+40);
         direction = "DOWN";
     }
     else if(event->key() == Qt::Key_Up &&serpTete->Direction()  != "DOWN") {
-      //  snake->setY(snake->y()-40);
         direction = "UP";
     }
     else if(event->key() == Qt::Key_Right && serpTete->Direction()  != "LEFT") {
-      //  snake->setX(snake->x()+40);
-        direction = "RIGHT";
+            direction = "RIGHT";
     }
     else if(event->key() == Qt::Key_Left && serpTete->Direction()  != "RIGHT") {
-        //snake->setX(snake->x()-40);
-        direction = "LEFT";
+            direction = "LEFT";
     }
     else if(event->key() == Qt::Key_Space){
         if(t->isActive() ){
             t->stop();
-
-//            fruitT->stop();
-//            fruit2T->stop();
+            text->setVisible(true);
         }
         else{
-//            fruitT->start(3000);
-//            fruit2T->start(7000);
             t->start(90);
+            text->setVisible(false);
         }
 
     }
     else if( event->key() == Qt::Key_Escape){
         if(t->isActive()){
             t->stop();
-//            fruitT->stop();
-//            fruit2T->stop();
-            jeu->afficherMenu("Jeu Serpent ", "Recommencer");
+            jeu->afficherPause();
         }
         else{
-
             t->start(90);
-            if(jeu->titreText != NULL)
+            if(jeu->pauseText != NULL)
             {
-                jeu->sceneDeJeu->removeItem(jeu->titreText);
-                delete jeu->titreText;
-                jeu->titreText = NULL;
+                jeu->sceneDeJeu->removeItem(jeu->pauseText);
+                delete jeu->pauseText;
+                jeu->pauseText = NULL;
             }
         }
     }

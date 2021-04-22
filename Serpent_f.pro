@@ -16,6 +16,7 @@ SOURCES += \
     main.cpp \
     murpart.cpp \
     obstacles.cpp \
+    score.cpp \
     serppart.cpp
 
 HEADERS += \
@@ -25,6 +26,7 @@ HEADERS += \
     jeu.h \
     murpart.h \
     obstacles.h \
+    score.h \
     serppart.h
 
 # Default rules for deployment.
