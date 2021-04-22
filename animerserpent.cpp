@@ -22,14 +22,12 @@ AnimerSerpent::AnimerSerpent(QGraphicsItem* parent):QGraphicsRectItem(parent)
     t = new QTimer();
     connect(t, SIGNAL(timeout()), this, SLOT(move()));
     ajouterFruit();
-    for(int i=0;i<10; ++i ){
-        ajouterFruit2();
-    }
-    fruitT = new QTimer();
+
+
     connect( serpTete, SIGNAL(manger()), this, SLOT(ajouterFruit()));
 
-    fruit2T = new QTimer();
-//    connect(fruit2T, SIGNAL(timeout()), this, SLOT(ajouterFruit2()));
+
+
 
     direction = "RIGHT";
 

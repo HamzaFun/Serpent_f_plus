@@ -25,8 +25,6 @@ private:
     SerpPart* serpQueue;
     QString direction;
     QTimer* t;
-    QTimer* fruitT;
-    QTimer* fruit2T;
     QGraphicsTextItem* text;
 
 };
