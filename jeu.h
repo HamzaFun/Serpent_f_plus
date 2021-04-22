@@ -23,6 +23,8 @@ public:
     Obstacles* obs = NULL;
     Button* b;
     void finJeu();
+private:
+    Button* creerStg(QString text, int w, int h, int xpos, int ypos, int stg, bool debut, QGraphicsTextItem* pere);
 public slots:
     void debut();
     void creerObs(int);

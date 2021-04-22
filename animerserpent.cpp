@@ -62,12 +62,12 @@ void AnimerSerpent::keyPressEvent(QKeyEvent *event)
         if(t->isActive() ){
             t->stop();
 
-            fruitT->stop();
-            fruit2T->stop();
+//            fruitT->stop();
+//            fruit2T->stop();
         }
         else{
-            fruitT->start(3000);
-            fruit2T->start(7000);
+//            fruitT->start(3000);
+//            fruit2T->start(7000);
             t->start(90);
         }
 
@@ -75,21 +75,18 @@ void AnimerSerpent::keyPressEvent(QKeyEvent *event)
     else if( event->key() == Qt::Key_Escape){
         if(t->isActive()){
             t->stop();
-            fruitT->stop();
-            fruit2T->stop();
+//            fruitT->stop();
+//            fruit2T->stop();
             jeu->afficherMenu("Jeu Serpent ", "Recommencer");
         }
         else{
-            fruitT->start(3000);
-            fruit2T->start(7000);
+
             t->start(90);
             if(jeu->titreText != NULL)
             {
-                qDebug() << "eshape start";
                 jeu->sceneDeJeu->removeItem(jeu->titreText);
                 delete jeu->titreText;
                 jeu->titreText = NULL;
-                qDebug() << "eshape suppression";
             }
         }
     }

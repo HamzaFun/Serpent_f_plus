@@ -84,18 +84,26 @@ void Jeu::finJeu()
 
 }
 
+Button* Jeu::creerStg(QString text, int w, int h, int xpos, int ypos, int stg, bool debut, QGraphicsTextItem *pere)
+{
+    Button* button = new Button(text, w, h, pere);
+    button->setPos( xpos, ypos);
+    button->stgNum = stg;
+    if(debut) connect(button, SIGNAL(clicked(int)),this,SLOT(creerObs(int)));
+//    else if(debut) connect(button, SIGNAL(clicked(int)),this,SLOT(creerObs(int)));
+    else  connect(button, SIGNAL(clicked(int)),this,SLOT(close()));
+
+    return button;
+}
+
+
+
 void Jeu::debut()
 {
     serp = new AnimerSerpent();
     serp->setFlag(QGraphicsItem::ItemIsFocusable);
     serp->setFocus();
     sceneDeJeu->addItem(serp);
-//    if(stg == 1){
-//        qDebug() << "choisir stage 1";
-//        Obstacles* obs = new Obstacles(1);
-//        sceneDeJeu->addItem(obs);
-//    }
-//    emit customObs(1);
     if(titreText != NULL){
         qDebug() << "suppression  :" << titreText->textWidth();
         sceneDeJeu->removeItem(titreText);
@@ -119,7 +127,6 @@ void Jeu::creerObs(int NumObs)
         sceneDeJeu->removeItem(obs);
         delete obs;
         obs = NULL;
-        qDebug() << "suppression Obs";
     }
     if(NumObs != 0 && obs == NULL){
     obs = new Obstacles(NumObs);
@@ -130,9 +137,11 @@ void Jeu::creerObs(int NumObs)
 
 void Jeu::afficherStages()
 {
-    sceneDeJeu->removeItem(titreText);
-    delete titreText;
-    titreText =NULL;
+    if(titreText != NULL){
+        sceneDeJeu->removeItem(titreText);
+        delete titreText;
+        titreText =NULL;
+    }
 
     stagesText = new QGraphicsTextItem("Stages");
     QFont titreFont("arial", 50 );
@@ -143,18 +152,27 @@ void Jeu::afficherStages()
     sceneDeJeu->addItem(stagesText);
 
     Button* stage = new Button("1", 50, 50, stagesText);
-    int sx = 50;
+    int sx = 0;
     int sy = 100;
     stage->setPos(sx,sy);
     stage->stgNum = 1;
     connect(stage, SIGNAL(clicked(int)), this, SLOT(creerObs(int)));
 
     Button* stage2 = new Button("2", 50, 50, stagesText);
-    int s2x = 100;
+    int s2x = 50;
     int s2y = 100;
     stage2->setPos(s2x,s2y);
     stage2->stgNum = 2;
     connect(stage2, SIGNAL(clicked(int)), this, SLOT(creerObs(int)));
+
+    Button* stage3 = new Button("3", 50, 50, stagesText);
+    int s3x = 100;
+    int s3y = 100;
+    stage3->setPos(s3x,s3y);
+    stage3->stgNum = 3;
+    connect(stage3, SIGNAL(clicked(int)), this, SLOT(creerObs(int)));
+
+    Button* stage4 = creerStg("4", 50, 50, 150,100, 4, true, stagesText);
 
     Button* retour = new Button("<< RETOUR", 100, 50, stagesText);
     int rx = 20;
@@ -162,14 +180,15 @@ void Jeu::afficherStages()
     retour->setPos(rx,ry);
     connect(retour, SIGNAL(clicked()), this, SLOT(retourAffich()));
 
+    Q_UNUSED(stage4);
 }
 
 void Jeu::retourAffich()
 {
-    if(stagesText){
-//        qDebug() << "retour sign";
+    if(stagesText != NULL){
         sceneDeJeu->removeItem(stagesText);
         delete stagesText;
+        stagesText = NULL;
     }
     afficherMenu("Jeu Serpent ", "Jouer");
 

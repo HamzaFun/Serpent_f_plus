@@ -46,8 +46,7 @@ void Obstacles::crearObs1()
         ajouterMurPart(1160,s);
         s+=40;
     }
-//    MurPart* mur1 = new MurPart(this);
-//    mur1->setPos(mur->boundingRect().width(),0);
+
 }
 
 void Obstacles::crearObs2()
