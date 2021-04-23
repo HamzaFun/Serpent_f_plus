@@ -32,6 +32,6 @@
         <file>bg/menu.jpg</file>
     </qresource>
     <qresource prefix="/sounds">
-        <file>lazer.mp3</file>
+        <file>eat.wav</file>
     </qresource>
 </RCC>
