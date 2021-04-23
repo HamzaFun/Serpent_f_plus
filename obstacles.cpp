@@ -27,7 +27,7 @@ void Obstacles::ajouterMurPart(int x, int y)
 
 void Obstacles::crearObs1()
 {
-    bg = ":/images/bg1.jpg";
+    bg = ":/bg/bg/bg1.jpg";
     MurPart* mur = new MurPart(this);
     mur->setPos(0,0);
     int s=40;
@@ -55,7 +55,7 @@ void Obstacles::crearObs1()
 
 void Obstacles::crearObs2()
 {
-    bg = ":/images/bg2.png";
+    bg = ":/bg/bg/bg2.png";
     MurPart* mur = new MurPart(this);
     mur->setPos(0,0);
     int s=40;

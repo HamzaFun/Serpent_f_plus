@@ -4,6 +4,7 @@
 #include "murpart.h"
 #include <QList>
 #include <QDebug>
+#include <QMediaPlayer>
 
 extern Jeu* jeu;
 
@@ -117,6 +118,12 @@ void SerpPart::checkCollidingObject()
                 jeu->sceneDeJeu->removeItem(f);
                 jeu->score->setScore(jeu->score->getScore()+ f->score);
                 delete f;
+                if (jeu->serp->eatSound->state() == QMediaPlayer::PlayingState) {
+                    jeu->serp->eatSound->setPosition(0);
+                }else if (jeu->serp->eatSound->state() == QMediaPlayer::StoppedState)
+                {
+                    jeu->serp->eatSound->play();
+                }
                 if(jeu->score->getScore() == l){
                     emit mangerF();
                     l += 5;
@@ -148,48 +155,48 @@ void SerpPart::setImage()
     if(part == "HEAD"){
 
         if(direction == "UP"){
-          setPixmap(QPixmap(QString(":/images/%1headup.png").arg(image)).scaled(40,40));
+          setPixmap(QPixmap(QString(":/snake/skins/%1headup.png").arg(image)).scaled(40,40));
         }else if(direction == "DOWN"){
-           setPixmap(QPixmap(QString(":/images/%1headDown.png").arg(image)).scaled(40,40));
+           setPixmap(QPixmap(QString(":/snake/skins/%1headDown.png").arg(image)).scaled(40,40));
         }else if(direction == "LEFT"){
-            setPixmap(QPixmap(QString(":/images/%1headLeft.png").arg(image)).scaled(40,40));
+            setPixmap(QPixmap(QString(":/snake/skins/%1headLeft.png").arg(image)).scaled(40,40));
         }else if(direction == "RIGHT"){
-            setPixmap(QPixmap(QString(":/images/%1head.png").arg(image)).scaled(40,40/*,Qt::KeepAspectRatio*/));
+            setPixmap(QPixmap(QString(":/snake/skins/%1head.png").arg(image)).scaled(40,40/*,Qt::KeepAspectRatio*/));
         }
         setZValue(2);
 
     }
     else if(part == "TAIL") {
         if(direction == "UP"){
-          setPixmap(QPixmap(QString(":/images/%1tailUp.png").arg(image)).scaled(40,40));
+          setPixmap(QPixmap(QString(":/snake/skins/%1tailUp.png").arg(image)).scaled(40,40));
         }else if(direction == "DOWN"){
-           setPixmap(QPixmap(QString(":/images/%1tailDown.png").arg(image)).scaled(40,40));
+           setPixmap(QPixmap(QString(":/snake/skins/%1tailDown.png").arg(image)).scaled(40,40));
         }else if(direction == "LEFT"){
-            setPixmap(QPixmap(QString(":/images/%1tailLeft.png").arg(image)).scaled(40,40));
+            setPixmap(QPixmap(QString(":/snake/skins/%1tailLeft.png").arg(image)).scaled(40,40));
         }else if(direction == "RIGHT"){
-            setPixmap(QPixmap(QString(":/images/%1tail.png").arg(image)).scaled(40,40));
+            setPixmap(QPixmap(QString(":/snake/skins/%1tail.png").arg(image)).scaled(40,40));
         }
     }
     else if (part == "PART"){
         if(direction == this->Preced()->Direction()){
         if(direction == "LEFT" ||direction ==  "RIGHT")
-            setPixmap(QPixmap(QString(":/images/%1left-right.png").arg(image)).scaled(40,40));
+            setPixmap(QPixmap(QString(":/snake/skins/%1left-right.png").arg(image)).scaled(40,40));
         else if (direction == "UP" || direction == "DOWN")
-            setPixmap(QPixmap(QString(":/images/%1up-down.png").arg(image)).scaled(40,40));
+            setPixmap(QPixmap(QString(":/snake/skins/%1up-down.png").arg(image)).scaled(40,40));
 
         }
         else{
             if((direction == "UP" && this->Preced()->Direction() == "LEFT")
                     || (direction == "RIGHT" && this->Preced()->Direction() == "DOWN"))
-                setPixmap(QPixmap(QString(":/images/%1leftUp-downRight.png").arg(image)).scaled(40,40));
+                setPixmap(QPixmap(QString(":/snake/skins/%1leftUp-downRight.png").arg(image)).scaled(40,40));
             else if((direction == "UP" && this->Preced()->Direction() == "RIGHT")
                     || (direction == "LEFT" && this->Preced()->Direction() == "DOWN"))
-                setPixmap(QPixmap(QString(":/images/%1rightUp-downLeft.png").arg(image)).scaled(40,40));
+                setPixmap(QPixmap(QString(":/snake/skins/%1rightUp-downLeft.png").arg(image)).scaled(40,40));
             else if((direction == "LEFT" && this->Preced()->Direction() == "UP")
                     || (direction == "DOWN" && this->Preced()->Direction() == "RIGHT"))
-                setPixmap(QPixmap(QString(":/images/%1upLeft-rightDown.png").arg(image)).scaled(40,40));
+                setPixmap(QPixmap(QString(":/snake/skins/%1upLeft-rightDown.png").arg(image)).scaled(40,40));
             else
-                setPixmap(QPixmap(QString(":/images/%1upRight-leftDown.png").arg(image)).scaled(40,40));
+                setPixmap(QPixmap(QString(":/snake/skins/%1upRight-leftDown.png").arg(image)).scaled(40,40));
 
         }
 

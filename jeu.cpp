@@ -77,7 +77,7 @@ void Jeu::afficherFin(QString titre, QString jouer)
 void Jeu::afficherMenu(QString titre, QString jouer)
 {
 
-    background->setPixmap(QPixmap(":/images/bg.jpg").scaled(1200,600));
+    background->setPixmap(QPixmap(":/bg/bg/menu.jpg").scaled(1200,600));
     background->setZValue(0);
     sceneDeJeu->addItem(background);
     titreText = new QGraphicsTextItem(titre);
@@ -115,7 +115,6 @@ Button* Jeu::creerStg(QString text, int w, int h, int xpos, int ypos, int stg, b
     Button* button;
     if(stg != 0) {
         button = new Button(text, w, h, stg, true, pere);
-//        button->stgNum = stg;
         if(stg <= StageCourant){
             button->deletelock();
             qDebug() << "set Hovered";
@@ -142,7 +141,7 @@ Button* Jeu::creerStg(QString text, int w, int h, int xpos, int ypos, int stg, b
 void Jeu::debut()
 {
     if(obs == NULL){
-    background->setPixmap(QPixmap(":/images/bg2.png").scaled(1200,600));
+    background->setPixmap(QPixmap(":/bg/bg/bg4.png").scaled(1200,600));
     background->setZValue(0);
     sceneDeJeu->addItem(background);
     }
@@ -206,17 +205,9 @@ void Jeu::afficherStages()
     sceneDeJeu->addItem(stagesText);
 
     Button* stage = creerStg("1", 50, 50, 0,100, 1, true, stagesText);
-//    QGraphicsPixmapItem* locked = new QGraphicsPixmapItem(stagesText);
-//    locked->setPixmap(QPixmap(":/svgs/lock.png").scaled(30,30,Qt::KeepAspectRatio));
-//    locked->setPos(stage->pos().x()+15, stage->pos().y()+15);
-//    locked->setZValue(10);
 
 
     Button* stage2 = creerStg("2", 50, 50, 50,100, 2, true, stagesText);
-//    stage2->deletelock();
-//    stage2->setHoverd();
-//    stage2->setAcceptedMouseButtons(Qt::NoButton);
-//    if(stage2->acceptedMouseButtons() == Qt::NoButton) stage2->setAcceptHoverEvents(false);
     Button* stage3 = creerStg("3", 50, 50, 100,100, 3, true, stagesText);
     Button* stage4 = creerStg("4", 50, 50, 150,100, 4, true, stagesText);
 

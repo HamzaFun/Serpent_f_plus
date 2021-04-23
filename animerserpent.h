@@ -4,6 +4,7 @@
 #include "serppart.h"
 #include <QGraphicsRectItem>
 #include <QObject>
+#include <QMediaPlayer>
 
 class AnimerSerpent :public QObject, public QGraphicsRectItem
 {
@@ -14,7 +15,7 @@ public:
     void ajoutePart();
     void animer();
     QTimer* t;
-
+    QMediaPlayer* eatSound;
 
 public slots:
     void move();

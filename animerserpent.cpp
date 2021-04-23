@@ -24,6 +24,8 @@ AnimerSerpent::AnimerSerpent(QGraphicsItem* parent):QGraphicsRectItem(parent)
     for(int i=0;i< 20;++i){
     ajouterFruit();
 }
+    eatSound = new QMediaPlayer();
+    eatSound->setMedia(QUrl("qrc:/sounds/lazer.mp3"));
 
     connect( serpTete, SIGNAL(manger()), this, SLOT(ajouterFruit()));
     connect( serpTete, SIGNAL(mangerF()), this, SLOT(ajouterFruit2()));
