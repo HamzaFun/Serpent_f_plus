@@ -20,5 +20,22 @@
         <file>bg1.jpg</file>
         <file>bg2.png</file>
         <file>mur.png</file>
+        <file>1left-right.png</file>
+        <file>1leftUp-downRight.png</file>
+        <file>1rightUp-downLeft.png</file>
+        <file>1up-down.png</file>
+        <file>1upLeft-rightDown.png</file>
+        <file>1upRight-leftDown.png</file>
+        <file>1head.png</file>
+        <file>1headDown.png</file>
+        <file>1headLeft.png</file>
+        <file>1headup.png</file>
+        <file>1tail.png</file>
+        <file>1tailDown.png</file>
+        <file>1tailLeft.png</file>
+        <file>1tailUp.png</file>
+    </qresource>
+    <qresource prefix="/svgs">
+        <file>lock.png</file>
     </qresource>
 </RCC>

@@ -11,6 +11,7 @@ public:
     QString type;
     int ObsCourant;
     int maxScore;
+    QString bg;
 private:
     void crearObs1();
     void crearObs2();

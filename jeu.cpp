@@ -4,6 +4,7 @@
 #include "obstacles.h"
 
 #include <QDebug>
+#include <QGraphicsItem>
 #include <QGraphicsPixmapItem>
 #include <QKeyEvent>
 #include <QPushButton>
@@ -16,20 +17,18 @@ Jeu::Jeu(QWidget *parent):QGraphicsView(parent)
     setFixedSize(1200,600);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-
     // charger la scene de jeu
+    background = new QGraphicsPixmapItem();
     sceneDeJeu = new QGraphicsScene(this);
     sceneDeJeu->setSceneRect(0,0,1200,600);
-    QGraphicsPixmapItem* bg = new QGraphicsPixmapItem();
-    bg->setPixmap(QPixmap(":/images/bg1.jpg").scaled(1200,600));
-    bg->setZValue(0);
-    sceneDeJeu->addItem(bg);
     setScene(sceneDeJeu);
 
     score =new Score();
     sceneDeJeu->addItem(score);
     serp2 =NULL;
     serp = NULL;
+
+    StageCourant = 1;
 }
 
 void Jeu::keyPressEvent(QKeyEvent *event)
@@ -47,9 +46,40 @@ void Jeu::keyPressEvent(QKeyEvent *event)
         QGraphicsView::keyPressEvent(event);
 
 }
+void Jeu::afficherFin(QString titre, QString jouer)
+{
+    titreText = new QGraphicsTextItem(titre);
+    QFont titreFont("arial", 50 );
+    titreText->setFont(titreFont);
+    int xPos = width()/2 - titreText->boundingRect().width()/2;
+    int yPos = 100;
+    titreText->setPos(xPos, yPos);
+    sceneDeJeu->addItem(titreText);
 
+    Button* menu = new Button("STAGES", 150,40, titreText);
+    int mxPos = 100 ;
+    int myPos = 120;
+    menu->setPos(mxPos,myPos);
+
+    connect(menu, SIGNAL(clicked()), this, SLOT(afficherStages()));
+
+    Button* joue = creerStg(jouer, 150, 40, 100, 170, 0, true, titreText);
+//    Button* quit = creerStg("QUIT", 150, 40, 100,220, 0, false, titreText);
+    Button* quit = new Button("<< RETOUR", 150, 40, titreText);
+    int rx = 100;
+    int ry = 220;
+    quit->setPos(rx,ry);
+    connect(quit, SIGNAL(clicked()), this, SLOT(retourAffich()));
+    Q_UNUSED(joue);
+    Q_UNUSED(quit);
+
+}
 void Jeu::afficherMenu(QString titre, QString jouer)
 {
+
+    background->setPixmap(QPixmap(":/images/bg.jpg").scaled(1200,600));
+    background->setZValue(0);
+    sceneDeJeu->addItem(background);
     titreText = new QGraphicsTextItem(titre);
     QFont titreFont("arial", 50 );
     titreText->setFont(titreFont);
@@ -75,22 +105,35 @@ void Jeu::afficherMenu(QString titre, QString jouer)
 
 void Jeu::finJeu()
 {
-    afficherMenu("Game Over", "ReJeouer !!");
+    afficherFin("Fin De Jeu", "ReJeouer");
     sceneDeJeu->removeItem(serp);
-
+    serp = NULL;
 }
 
 Button* Jeu::creerStg(QString text, int w, int h, int xpos, int ypos, int stg, bool debut, QGraphicsTextItem *pere)
 {
-    Button* button = new Button(text, w, h, pere);
-    button->setPos( xpos, ypos);
+    Button* button;
     if(stg != 0) {
-        button->stgNum = stg;
+        button = new Button(text, w, h, stg, true, pere);
+//        button->stgNum = stg;
+        if(stg <= StageCourant){
+            button->deletelock();
+            qDebug() << "set Hovered";
+        }
+        button->setHoverd();
         connect(button, SIGNAL(clicked(int)),this,SLOT(creerObs(int)));
     }
-    else if(debut) connect(button, SIGNAL(clicked(int)),this,SLOT(debut()));
-    else  connect(button, SIGNAL(clicked(int)),this,SLOT(close()));
+    else if(debut)
+    {
+        button = new Button(text, w, h, pere);
+        connect(button, SIGNAL(clicked(int)),this,SLOT(debut()));
+    }
+    else {
+        button = new Button(text, w, h, pere);
+        connect(button, SIGNAL(clicked(int)),this,SLOT(close()));
+    }
 
+    button->setPos( xpos, ypos);
     return button;
 }
 
@@ -98,6 +141,11 @@ Button* Jeu::creerStg(QString text, int w, int h, int xpos, int ypos, int stg, b
 
 void Jeu::debut()
 {
+    if(obs == NULL){
+    background->setPixmap(QPixmap(":/images/bg2.png").scaled(1200,600));
+    background->setZValue(0);
+    sceneDeJeu->addItem(background);
+    }
     serp = new AnimerSerpent();
     serp->setFlag(QGraphicsItem::ItemIsFocusable);
     serp->setFocus();
@@ -134,6 +182,9 @@ void Jeu::creerObs(int NumObs)
     if(NumObs != 0 && obs == NULL){
     obs = new Obstacles(NumObs);
     sceneDeJeu->addItem(obs);
+    background->setPixmap(QPixmap(obs->bg).scaled(1200,600));
+    background->setZValue(0);
+    sceneDeJeu->addItem(background);
     }
     debut();
 }
@@ -155,7 +206,15 @@ void Jeu::afficherStages()
     sceneDeJeu->addItem(stagesText);
 
     Button* stage = creerStg("1", 50, 50, 0,100, 1, true, stagesText);
+//    QGraphicsPixmapItem* locked = new QGraphicsPixmapItem(stagesText);
+//    locked->setPixmap(QPixmap(":/svgs/lock.png").scaled(30,30,Qt::KeepAspectRatio));
+//    locked->setPos(stage->pos().x()+15, stage->pos().y()+15);
+//    locked->setZValue(10);
+
+
     Button* stage2 = creerStg("2", 50, 50, 50,100, 2, true, stagesText);
+//    stage2->deletelock();
+//    stage2->setHoverd();
 //    stage2->setAcceptedMouseButtons(Qt::NoButton);
 //    if(stage2->acceptedMouseButtons() == Qt::NoButton) stage2->setAcceptHoverEvents(false);
     Button* stage3 = creerStg("3", 50, 50, 100,100, 3, true, stagesText);
@@ -166,6 +225,7 @@ void Jeu::afficherStages()
     int ry = 400;
     retour->setPos(rx,ry);
     connect(retour, SIGNAL(clicked()), this, SLOT(retourAffich()));
+
 
     Q_UNUSED(stage);
     Q_UNUSED(stage2);
@@ -241,6 +301,11 @@ void Jeu::retourAffich()
         delete stagesText;
         stagesText = NULL;
     }
+    if(titreText != NULL){
+        sceneDeJeu->removeItem(titreText);
+        delete titreText;
+        titreText = NULL;
+    }
     afficherMenu("Jeu Serpent ", "Jouer");
 
 }
@@ -268,12 +333,17 @@ void Jeu::commancer()
 void Jeu::routeurMenu()
 {
     sceneDeJeu->removeItem(serp);
-//    delete serp;
+    serp =NULL;
     if(choixText != NULL)
     {
         sceneDeJeu->removeItem(choixText);
         delete choixText;
         choixText = NULL;
+    }
+    if(obs != NULL){
+        sceneDeJeu->removeItem(obs);
+        delete obs;
+        obs = NULL;
     }
     if(pauseText != NULL){
         sceneDeJeu->removeItem(pauseText);
@@ -281,6 +351,16 @@ void Jeu::routeurMenu()
         pauseText = NULL;
     }
     afficherMenu("Jeu Serpent ", "Jouer");
+}
+
+void Jeu::stageSuiv()
+{
+    if(obs != NULL){
+        sceneDeJeu->removeItem(obs);
+        delete obs;
+        obs = NULL;
+    }
+    creerObs(StageCourant);
 }
 
 

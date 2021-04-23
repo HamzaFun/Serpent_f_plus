@@ -8,7 +8,7 @@
 extern Jeu* jeu;
 
 SerpPart::SerpPart(QGraphicsItem* parent):QGraphicsPixmapItem(parent)
-, image("")
+, image("1")
 , pas(40)
 {
     setZValue(1);
@@ -123,8 +123,13 @@ void SerpPart::checkCollidingObject()
                 }else{
                     emit manger();
                 }
-                if(jeu->obs->maxScore <= jeu->score->getScore()){
-                    jeu->finJeu();
+                if(jeu->obs != NULL){
+
+                    if(jeu->obs->maxScore <= jeu->score->getScore()){
+                        qDebug() << "next stage";
+                        jeu->StageCourant++;
+                        emit finStage();
+                    }
                 }
             }
         }
@@ -149,7 +154,7 @@ void SerpPart::setImage()
         }else if(direction == "LEFT"){
             setPixmap(QPixmap(QString(":/images/%1headLeft.png").arg(image)).scaled(40,40));
         }else if(direction == "RIGHT"){
-            setPixmap(QPixmap(QString(":/images/%1head.png").arg(image)).scaled(40,40,Qt::KeepAspectRatio));
+            setPixmap(QPixmap(QString(":/images/%1head.png").arg(image)).scaled(40,40/*,Qt::KeepAspectRatio*/));
         }
         setZValue(2);
 

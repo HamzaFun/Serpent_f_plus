@@ -38,6 +38,7 @@ private:
 signals :
     void manger();
     void mangerF();
+    void finStage();
 };
 
 #endif // SERPPART_H

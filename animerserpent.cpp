@@ -18,12 +18,12 @@ AnimerSerpent::AnimerSerpent(QGraphicsItem* parent):QGraphicsRectItem(parent)
     serpTete->part = "HEAD";
     serpTete->setImage();
     serpQueue = serpTete;
-
+    connect(serpTete, SIGNAL(finStage()), jeu, SLOT(stageSuiv()));
     t = new QTimer();
     connect(t, SIGNAL(timeout()), this, SLOT(move()));
-//    for(int i=0;i< 20;++i){
+    for(int i=0;i< 20;++i){
     ajouterFruit();
-//}
+}
 
     connect( serpTete, SIGNAL(manger()), this, SLOT(ajouterFruit()));
     connect( serpTete, SIGNAL(mangerF()), this, SLOT(ajouterFruit2()));

@@ -18,16 +18,18 @@ public:
     AnimerSerpent* serp;
     AnimerSerpent* serp2;
     int stg;
-
     void afficherMenu(QString titre, QString jouer);
+    void afficherFin(QString titre, QString jouer);
     QGraphicsTextItem* titreText = NULL;
     QGraphicsTextItem* pauseText = NULL;
     QGraphicsTextItem* choixText = NULL;
     QGraphicsTextItem* stagesText = NULL;
     Obstacles* obs = NULL;
     Button* b;
+    int StageCourant;
     void finJeu();
 private:
+    QGraphicsPixmapItem* background;
     Button* creerStg(QString text, int w, int h, int xpos, int ypos, int stg, bool debut, QGraphicsTextItem* pere);
 public slots:
     void debut();
@@ -38,6 +40,7 @@ public slots:
     void retourAffich();
     void commancer();
     void routeurMenu();
+    void stageSuiv();
 
 };
 
