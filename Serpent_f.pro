@@ -17,7 +17,8 @@ SOURCES += \
     murpart.cpp \
     obstacles.cpp \
     score.cpp \
-    serppart.cpp
+    serppart.cpp \
+    soundeffects.cpp
 
 HEADERS += \
     animerserpent.h \
@@ -27,7 +28,8 @@ HEADERS += \
     murpart.h \
     obstacles.h \
     score.h \
-    serppart.h
+    serppart.h \
+    soundeffects.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

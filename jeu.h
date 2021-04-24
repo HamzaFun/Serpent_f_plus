@@ -7,6 +7,7 @@
 #include "button.h"
 #include "obstacles.h"
 #include "score.h"
+#include "soundeffects.h"
 
 class Jeu : public QGraphicsView
 {
@@ -14,6 +15,7 @@ class Jeu : public QGraphicsView
 public:
     Jeu(QWidget* parent=0);
     QGraphicsScene* sceneDeJeu;
+    SoundEffects* sfx;
     AnimerSerpent* serp;
     AnimerSerpent* serp2;
 

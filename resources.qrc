@@ -26,11 +26,9 @@
     <qresource prefix="/">
         <file>Sounds/background_music.mp3</file>
         <file>Sounds/bg_music.mp3</file>
-        <file>Sounds/eat.wav</file>
         <file>Sounds/game_music.mp3</file>
         <file>Sounds/gameover_music.mp3</file>
         <file>Sounds/ingame_music1.mp3</file>
-        <file>Sounds/lazer.mp3</file>
         <file>Sounds/menu_music.mp3</file>
         <file>Sounds/menu_music2.mp3</file>
         <file>bg/bg.jpg</file>
@@ -67,5 +65,19 @@
         <file>skins/up-down.png</file>
         <file>skins/upLeft-rightDown.png</file>
         <file>skins/upRight-leftDown.png</file>
+        <file>Sounds/sfx/click1.wav</file>
+        <file>Sounds/sfx/click2.wav</file>
+        <file>Sounds/sfx/click3.wav</file>
+        <file>Sounds/sfx/coin.wav</file>
+        <file>Sounds/sfx/coin1.wav</file>
+        <file>Sounds/sfx/coin3.wav</file>
+        <file>Sounds/sfx/coin4.wav</file>
+        <file>Sounds/sfx/coin5.wav</file>
+        <file>Sounds/sfx/coin6.wav</file>
+        <file>Sounds/sfx/countdown.wav</file>
+        <file>Sounds/sfx/eat.wav</file>
+        <file>Sounds/sfx/lose1.wav</file>
+        <file>Sounds/sfx/lose2.wav</file>
+        <file>Sounds/sfx/lose3.wav</file>
     </qresource>
 </RCC>

@@ -118,16 +118,11 @@ void SerpPart::checkCollidingObject()
                 jeu->sceneDeJeu->removeItem(f);
                 jeu->score->setScore(jeu->score->getScore()+ f->score);
                 delete f;
-                if (jeu->serp->eatSound->state() == QMediaPlayer::PlayingState) {
-                    jeu->serp->eatSound->setPosition(0);
-                }else if (jeu->serp->eatSound->state() == QMediaPlayer::StoppedState)
-                {
-                    jeu->serp->eatSound->play();
-                }
                 if(jeu->score->getScore() == l){
                     emit mangerF();
                     l += 5;
                 }else{
+                    emit jeu->sfx->coin1();
                     emit manger();
                 }
                 if(jeu->obs != NULL){

@@ -20,8 +20,9 @@ Jeu::Jeu(QWidget *parent):QGraphicsView(parent)
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     // charger la scene de jeu
-    background = new QGraphicsPixmapItem();
     sceneDeJeu = new QGraphicsScene(this);
+    background = new QGraphicsPixmapItem();
+    sfx = new SoundEffects(this);
 
     sceneDeJeu->setSceneRect(0,0,1200,600);
     setScene(sceneDeJeu);
