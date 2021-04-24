@@ -23,15 +23,49 @@
         <file>skins/1upLeft-rightDown.png</file>
         <file>skins/1upRight-leftDown.png</file>
     </qresource>
-    <qresource prefix="/bg">
+    <qresource prefix="/">
+        <file>Sounds/background_music.mp3</file>
+        <file>Sounds/bg_music.mp3</file>
+        <file>Sounds/eat.wav</file>
+        <file>Sounds/game_music.mp3</file>
+        <file>Sounds/gameover_music.mp3</file>
+        <file>Sounds/ingame_music1.mp3</file>
+        <file>Sounds/lazer.mp3</file>
+        <file>Sounds/menu_music.mp3</file>
+        <file>Sounds/menu_music2.mp3</file>
         <file>bg/bg.jpg</file>
         <file>bg/bg1.jpg</file>
         <file>bg/bg2.png</file>
         <file>bg/bg3.jpg</file>
         <file>bg/bg4.png</file>
         <file>bg/menu.jpg</file>
-    </qresource>
-    <qresource prefix="/sounds">
-        <file>eat.wav</file>
+        <file>skins/1head.png</file>
+        <file>skins/1headDown.png</file>
+        <file>skins/1headLeft.png</file>
+        <file>skins/1headup.png</file>
+        <file>skins/1left-right.png</file>
+        <file>skins/1leftUp-downRight.png</file>
+        <file>skins/1rightUp-downLeft.png</file>
+        <file>skins/1tail.png</file>
+        <file>skins/1tailDown.png</file>
+        <file>skins/1tailLeft.png</file>
+        <file>skins/1tailUp.png</file>
+        <file>skins/1up-down.png</file>
+        <file>skins/1upLeft-rightDown.png</file>
+        <file>skins/1upRight-leftDown.png</file>
+        <file>skins/head.png</file>
+        <file>skins/headDown.png</file>
+        <file>skins/headLeft.png</file>
+        <file>skins/headup.png</file>
+        <file>skins/left-right.png</file>
+        <file>skins/leftUp-downRight.png</file>
+        <file>skins/rightUp-downLeft.png</file>
+        <file>skins/tail.png</file>
+        <file>skins/tailDown.png</file>
+        <file>skins/tailLeft.png</file>
+        <file>skins/tailUp.png</file>
+        <file>skins/up-down.png</file>
+        <file>skins/upLeft-rightDown.png</file>
+        <file>skins/upRight-leftDown.png</file>
     </qresource>
 </RCC>

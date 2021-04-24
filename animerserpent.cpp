@@ -137,8 +137,8 @@ void AnimerSerpent::ajouterFruit()
         k=0;
 
     QList <QGraphicsItem* > coll = jeu->sceneDeJeu->items();
-    x = QRandomGenerator::global()->generate() % (1160/40)*40 ;
-    y = QRandomGenerator::global()->generate() % (560/40)*40 ;
+    x = QRandomGenerator::global()->bounded(29) *40 ;
+    y = QRandomGenerator::global()->bounded(14) *40 ;
 
     for(int i=0; i < coll.length(); ++i){
         if(coll[i]->pos().x() == x && coll[i]->pos().y() == y ) {
@@ -162,8 +162,8 @@ void AnimerSerpent::ajouterFruit2()
         k=0;
 
     QList <QGraphicsItem* > coll = jeu->sceneDeJeu->items();
-    x = QRandomGenerator::global()->generate() % (1160/40)*40 ;
-    y = QRandomGenerator::global()->generate() % (560/40)*40 ;
+    x = QRandomGenerator::global()->bounded(29) *40 ;
+    y = QRandomGenerator::global()->bounded(14) *40 ;
 
     for(int i=0; i < coll.length(); ++i){
         if(coll[i]->pos().x() == x && coll[i]->pos().y() == y ) {

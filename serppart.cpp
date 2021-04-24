@@ -155,32 +155,32 @@ void SerpPart::setImage()
     if(part == "HEAD"){
 
         if(direction == "UP"){
-          setPixmap(QPixmap(QString(":/snake/skins/%1headup.png").arg(image)).scaled(40,40));
+          setPixmap(QPixmap(QString(":/skins/%1headup.png").arg(image)).scaled(40,40));
         }else if(direction == "DOWN"){
-           setPixmap(QPixmap(QString(":/snake/skins/%1headDown.png").arg(image)).scaled(40,40));
+           setPixmap(QPixmap(QString(":/skins/%1headDown.png").arg(image)).scaled(40,40));
         }else if(direction == "LEFT"){
-            setPixmap(QPixmap(QString(":/snake/skins/%1headLeft.png").arg(image)).scaled(40,40));
+            setPixmap(QPixmap(QString(":/skins/%1headLeft.png").arg(image)).scaled(40,40));
         }else if(direction == "RIGHT"){
-            setPixmap(QPixmap(QString(":/snake/skins/%1head.png").arg(image)).scaled(40,40/*,Qt::KeepAspectRatio*/));
+            setPixmap(QPixmap(QString(":/skins/%1head.png").arg(image)).scaled(40,40/*,Qt::KeepAspectRatio*/));
         }
         setZValue(2);
 
     }
     else if(part == "TAIL") {
         if(direction == "UP"){
-          setPixmap(QPixmap(QString(":/snake/skins/%1tailUp.png").arg(image)).scaled(40,40));
+          setPixmap(QPixmap(QString(":/skins/%1tailUp.png").arg(image)).scaled(40,40));
         }else if(direction == "DOWN"){
-           setPixmap(QPixmap(QString(":/snake/skins/%1tailDown.png").arg(image)).scaled(40,40));
+           setPixmap(QPixmap(QString(":/skins/%1tailDown.png").arg(image)).scaled(40,40));
         }else if(direction == "LEFT"){
-            setPixmap(QPixmap(QString(":/snake/skins/%1tailLeft.png").arg(image)).scaled(40,40));
+            setPixmap(QPixmap(QString(":/skins/%1tailLeft.png").arg(image)).scaled(40,40));
         }else if(direction == "RIGHT"){
-            setPixmap(QPixmap(QString(":/snake/skins/%1tail.png").arg(image)).scaled(40,40));
+            setPixmap(QPixmap(QString(":/skins/%1tail.png").arg(image)).scaled(40,40));
         }
     }
     else if (part == "PART"){
         if(direction == this->Preced()->Direction()){
         if(direction == "LEFT" ||direction ==  "RIGHT")
-            setPixmap(QPixmap(QString(":/snake/skins/%1left-right.png").arg(image)).scaled(40,40));
+            setPixmap(QPixmap(QString(":/skins/%1left-right.png").arg(image)).scaled(40,40));
         else if (direction == "UP" || direction == "DOWN")
             setPixmap(QPixmap(QString(":/snake/skins/%1up-down.png").arg(image)).scaled(40,40));
 
@@ -188,15 +188,15 @@ void SerpPart::setImage()
         else{
             if((direction == "UP" && this->Preced()->Direction() == "LEFT")
                     || (direction == "RIGHT" && this->Preced()->Direction() == "DOWN"))
-                setPixmap(QPixmap(QString(":/snake/skins/%1leftUp-downRight.png").arg(image)).scaled(40,40));
+                setPixmap(QPixmap(QString(":/skins/%1leftUp-downRight.png").arg(image)).scaled(40,40));
             else if((direction == "UP" && this->Preced()->Direction() == "RIGHT")
                     || (direction == "LEFT" && this->Preced()->Direction() == "DOWN"))
-                setPixmap(QPixmap(QString(":/snake/skins/%1rightUp-downLeft.png").arg(image)).scaled(40,40));
+                setPixmap(QPixmap(QString(":/skins/%1rightUp-downLeft.png").arg(image)).scaled(40,40));
             else if((direction == "LEFT" && this->Preced()->Direction() == "UP")
                     || (direction == "DOWN" && this->Preced()->Direction() == "RIGHT"))
-                setPixmap(QPixmap(QString(":/snake/skins/%1upLeft-rightDown.png").arg(image)).scaled(40,40));
+                setPixmap(QPixmap(QString(":/skins/%1upLeft-rightDown.png").arg(image)).scaled(40,40));
             else
-                setPixmap(QPixmap(QString(":/snake/skins/%1upRight-leftDown.png").arg(image)).scaled(40,40));
+                setPixmap(QPixmap(QString(":/skins/%1upRight-leftDown.png").arg(image)).scaled(40,40));
 
         }
 

@@ -7,11 +7,13 @@
 #include <QGraphicsItem>
 #include <QGraphicsPixmapItem>
 #include <QKeyEvent>
+#include <QMediaPlaylist>
 #include <QPushButton>
 #include <QStyle>
 #include <QTimer>
 
 Jeu::Jeu(QWidget *parent):QGraphicsView(parent)
+, font("baloo 2")
 {
     // charger la vue :
     setFixedSize(1200,600);
@@ -20,8 +22,12 @@ Jeu::Jeu(QWidget *parent):QGraphicsView(parent)
     // charger la scene de jeu
     background = new QGraphicsPixmapItem();
     sceneDeJeu = new QGraphicsScene(this);
+
     sceneDeJeu->setSceneRect(0,0,1200,600);
     setScene(sceneDeJeu);
+
+    background_music = creerMusic("qrc:/Sounds/ingame_music1.mp3");
+    menu_music = creerMusic("qrc:/Sounds/menu_music2.mp3");
 
     score =new Score();
     sceneDeJeu->addItem(score);
@@ -49,24 +55,23 @@ void Jeu::keyPressEvent(QKeyEvent *event)
 void Jeu::afficherFin(QString titre, QString jouer)
 {
     titreText = new QGraphicsTextItem(titre);
-    QFont titreFont("arial", 50 );
+    QFont titreFont(font, 50 );
     titreText->setFont(titreFont);
     int xPos = width()/2 - titreText->boundingRect().width()/2;
     int yPos = 100;
     titreText->setPos(xPos, yPos);
     sceneDeJeu->addItem(titreText);
 
-    Button* menu = new Button("STAGES", 150,40, titreText);
-    int mxPos = 100 ;
+    Button* stages = new Button("STAGES", 150,40, titreText);
+    int mxPos = titreText->boundingRect().width()/2 - stages->boundingRect().width()/2 ;
     int myPos = 120;
-    menu->setPos(mxPos,myPos);
+    stages->setPos(mxPos,myPos);
 
-    connect(menu, SIGNAL(clicked()), this, SLOT(afficherStages()));
+    connect(stages, SIGNAL(clicked()), this, SLOT(afficherStages()));
 
-    Button* joue = creerStg(jouer, 150, 40, 100, 170, 0, true, titreText);
-//    Button* quit = creerStg("QUIT", 150, 40, 100,220, 0, false, titreText);
+    Button* joue = creerStg(jouer, 150, 40, titreText->boundingRect().width()/2 - 75, 170, 0, true, titreText);
     Button* quit = new Button("<< RETOUR", 150, 40, titreText);
-    int rx = 100;
+    int rx = titreText->boundingRect().width()/2 - quit->boundingRect().width()/2;
     int ry = 220;
     quit->setPos(rx,ry);
     connect(quit, SIGNAL(clicked()), this, SLOT(retourAffich()));
@@ -76,12 +81,15 @@ void Jeu::afficherFin(QString titre, QString jouer)
 }
 void Jeu::afficherMenu(QString titre, QString jouer)
 {
-
-    background->setPixmap(QPixmap(":/bg/bg/menu.jpg").scaled(1200,600));
+    if(menu_music->state() == QMediaPlayer::StoppedState){
+        menu_music->play();
+    }
+    background->setPixmap(QPixmap(":/bg/menu.jpg").scaled(1200,600));
     background->setZValue(0);
     sceneDeJeu->addItem(background);
     titreText = new QGraphicsTextItem(titre);
-    QFont titreFont("arial", 50 );
+    QFont titreFont("baloo 2", 50 );
+    titreText->setDefaultTextColor(Qt::white);
     titreText->setFont(titreFont);
     int xPos = width()/2 - titreText->boundingRect().width()/2;
     int yPos = 100;
@@ -89,14 +97,14 @@ void Jeu::afficherMenu(QString titre, QString jouer)
     sceneDeJeu->addItem(titreText);
 
     Button* menu = new Button("STAGES", 150,40, titreText);
-    int mxPos = 100 ;
+    int mxPos = titreText->boundingRect().width()/2 - menu->boundingRect().width()/2 ;
     int myPos = 120;
     menu->setPos(mxPos,myPos);
 
     connect(menu, SIGNAL(clicked()), this, SLOT(afficherStages()));
 
-    Button* joue = creerStg(jouer, 150, 40, 100, 170, 0, true, titreText);
-    Button* quit = creerStg("QUIT", 150, 40, 100,220, 0, false, titreText);
+    Button* joue = creerStg(jouer, 150, 40, titreText->boundingRect().width()/2 - 75, 170, 0, true, titreText);
+    Button* quit = creerStg("QUIT", 150, 40, titreText->boundingRect().width()/2 - 75, 220, 0, false, titreText);
 
     Q_UNUSED(joue);
     Q_UNUSED(quit);
@@ -108,6 +116,20 @@ void Jeu::finJeu()
     afficherFin("Fin De Jeu", "ReJeouer");
     sceneDeJeu->removeItem(serp);
     serp = NULL;
+    if(background_music->state() == QMediaPlayer::PlayingState){
+        background_music->stop();
+    }
+}
+
+QMediaPlayer *Jeu::creerMusic(QString music)
+{
+    QMediaPlaylist* playList = new QMediaPlaylist(this);
+    QMediaPlayer *media = new QMediaPlayer(this);
+    playList->addMedia(QUrl(music));
+    playList->setPlaybackMode(QMediaPlaylist::Loop);
+    media->setPlaylist(playList);
+    media->setVolume(30);
+    return media;
 }
 
 Button* Jeu::creerStg(QString text, int w, int h, int xpos, int ypos, int stg, bool debut, QGraphicsTextItem *pere)
@@ -138,12 +160,19 @@ Button* Jeu::creerStg(QString text, int w, int h, int xpos, int ypos, int stg, b
 
 
 
+
 void Jeu::debut()
 {
     if(obs == NULL){
-    background->setPixmap(QPixmap(":/bg/bg/bg4.png").scaled(1200,600));
+    background->setPixmap(QPixmap(":/bg/bg4.png").scaled(1200,600));
     background->setZValue(0);
     sceneDeJeu->addItem(background);
+    }
+    if(menu_music->state() == QMediaPlayer::PlayingState){
+        menu_music->stop();
+    }
+    if(background_music->state() == QMediaPlayer::StoppedState){
+        background_music->play();
     }
     serp = new AnimerSerpent();
     serp->setFlag(QGraphicsItem::ItemIsFocusable);
@@ -195,9 +224,10 @@ void Jeu::afficherStages()
         delete titreText;
         titreText =NULL;
     }
-
-    stagesText = new QGraphicsTextItem("Stages");
-    QFont titreFont("arial", 50 );
+    int x = 60;
+    stagesText = new QGraphicsTextItem("STAGES");
+    QFont titreFont(font, 50 );
+    stagesText->setDefaultTextColor(Qt::white);
     stagesText->setFont(titreFont);
     int xPos = width()/2 - stagesText->boundingRect().width()/2;
     int yPos = 100;
@@ -207,12 +237,12 @@ void Jeu::afficherStages()
     Button* stage = creerStg("1", 50, 50, 0,100, 1, true, stagesText);
 
 
-    Button* stage2 = creerStg("2", 50, 50, 50,100, 2, true, stagesText);
-    Button* stage3 = creerStg("3", 50, 50, 100,100, 3, true, stagesText);
-    Button* stage4 = creerStg("4", 50, 50, 150,100, 4, true, stagesText);
+    Button* stage2 = creerStg("2", 50, 50, x ,100, 2, true, stagesText);
+    Button* stage3 = creerStg("3", 50, 50, 2*x,100, 3, true, stagesText);
+    Button* stage4 = creerStg("4", 50, 50, 3*x,100, 4, true, stagesText);
 
     Button* retour = new Button("<< RETOUR", 100, 50, stagesText);
-    int rx = 20;
+    int rx = stagesText->boundingRect().width()/2 - retour->boundingRect().width()/2;
     int ry = 400;
     retour->setPos(rx,ry);
     connect(retour, SIGNAL(clicked()), this, SLOT(retourAffich()));
