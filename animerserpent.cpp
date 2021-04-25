@@ -21,9 +21,9 @@ AnimerSerpent::AnimerSerpent(QGraphicsItem* parent):QGraphicsRectItem(parent)
     connect(serpTete, SIGNAL(finStage()), jeu, SLOT(stageSuiv()));
     t = new QTimer();
     connect(t, SIGNAL(timeout()), this, SLOT(move()));
-    for(int i=0;i< 20;++i){
+//    for(int i=0;i< 20;++i){
     ajouterFruit();
-}
+//}
     eatSound = new QMediaPlayer();
     eatSound->setMedia(QUrl("qrc:/sounds/eat.wav"));
 
@@ -41,9 +41,10 @@ AnimerSerpent::AnimerSerpent(QGraphicsItem* parent):QGraphicsRectItem(parent)
 
     text = new QGraphicsTextItem(this);
     text->setVisible(true);
-    text->setPlainText("Puiez sur Espace pour continue");
-    text->setPos(650,250);
-    text->setFont(QFont("",14));
+    text->setPlainText("Puiez sur Espace pour commancer");
+    text->setPos(400,250);
+    text->setDefaultTextColor(Qt::BackButton);
+    text->setFont(QFont("Karantina",20));
 
 
 }
@@ -85,6 +86,12 @@ void AnimerSerpent::keyPressEvent(QKeyEvent *event)
                 jeu->sceneDeJeu->removeItem(jeu->pauseText);
                 delete jeu->pauseText;
                 jeu->pauseText = NULL;
+            }
+            if(jeu->score->scoreText != NULL)
+            {
+                jeu->sceneDeJeu->removeItem(jeu->score->scoreText );
+                delete jeu->score->scoreText ;
+                jeu->score->scoreText  = NULL;
             }
         }
     }

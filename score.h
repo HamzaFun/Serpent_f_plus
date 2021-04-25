@@ -9,6 +9,10 @@ public:
     Score(QGraphicsItem* parent = 0);
     int getScore();
     void setScore(int valeur);
+    void afficherScore();
+    QString titre;
+
+    QGraphicsTextItem* scoreText = NULL;
 
 private :
     int score;

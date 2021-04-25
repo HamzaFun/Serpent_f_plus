@@ -3,6 +3,7 @@
         <file>food.png</file>
         <file>food2.png</file>
         <file>mur.png</file>
+        <file>snake.ico</file>
     </qresource>
     <qresource prefix="/svgs">
         <file>lock.png</file>

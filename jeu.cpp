@@ -11,6 +11,7 @@
 #include <QPushButton>
 #include <QStyle>
 #include <QTimer>
+#include <QString>
 
 Jeu::Jeu(QWidget *parent):QGraphicsView(parent)
 , font("baloo 2")
@@ -35,6 +36,7 @@ Jeu::Jeu(QWidget *parent):QGraphicsView(parent)
     sceneDeJeu->addItem(score);
     serp2 =NULL;
     serp = NULL;
+    setWindowIcon(QIcon(":/images/snake.ico"));
 
     StageCourant = 1;
 }
@@ -57,11 +59,9 @@ void Jeu::keyPressEvent(QKeyEvent *event)
 void Jeu::afficherFin(QString titre, QString jouer)
 {
     titreText = new QGraphicsTextItem(titre);
-    QFont titreFont(font, 50 );
-    titreText->setFont(titreFont);
-    int xPos = width()/2 - titreText->boundingRect().width()/2;
-    int yPos = 100;
-    titreText->setPos(xPos, yPos);
+    titreText->setFont(QFont(font, 50));
+    titreText->setPos(width()/2 - titreText->boundingRect().width()/2, 100);
+    titreText->setDefaultTextColor(Qt::white);
     sceneDeJeu->addItem(titreText);
 
 //    Button* stages = new Button("STAGES", 150,40, titreText);
@@ -73,15 +73,14 @@ void Jeu::afficherFin(QString titre, QString jouer)
 
     Button* joue = creerStg(jouer, 150, 40, titreText->boundingRect().width()/2 - 75, 170, 0, true, titreText);
     Button* quit = new Button("<< RETOUR", 150, 40, titreText);
-    int rx = titreText->boundingRect().width()/2 - quit->boundingRect().width()/2;
-    int ry = 220;
-    quit->setPos(rx,ry);
+    quit->setPos(titreText->boundingRect().width()/2 - quit->boundingRect().width()/2,220);
     connect(quit, SIGNAL(clicked()), this, SLOT(routeurMenu()));
 
     Q_UNUSED(joue);
     Q_UNUSED(quit);
 
 }
+
 void Jeu::afficherMenu(QString titre, QString jouer)
 {
     findejeu_music->stopMusic();
@@ -92,23 +91,24 @@ void Jeu::afficherMenu(QString titre, QString jouer)
     background->setZValue(0);
     sceneDeJeu->addItem(background);
     titreText = new QGraphicsTextItem(titre);
-    QFont titreFont("baloo 2", 50 );
     titreText->setDefaultTextColor(Qt::white);
-    titreText->setFont(titreFont);
-    int xPos = width()/2 - titreText->boundingRect().width()/2;
-    int yPos = 100;
-    titreText->setPos(xPos, yPos);
+    titreText->setFont(QFont(font, 50));
+    titreText->setPos(width()/2 - titreText->boundingRect().width()/2, 150);
     sceneDeJeu->addItem(titreText);
 
+    if(score->scoreText != NULL){
+        sceneDeJeu->removeItem(score->scoreText);
+        delete score->scoreText;
+        score->scoreText = NULL;
+    }
+
     Button* menu = new Button("STAGES", 150,40, titreText);
-    int mxPos = titreText->boundingRect().width()/2 - menu->boundingRect().width()/2 ;
-    int myPos = 120;
-    menu->setPos(mxPos,myPos);
+    menu->setPos(titreText->boundingRect().width()/2 - menu->boundingRect().width()/2,140);
 
     connect(menu, SIGNAL(clicked()), this, SLOT(afficherStages()));
 
-    Button* joue = creerStg(jouer, 150, 40, titreText->boundingRect().width()/2 - 75, 170, 0, true, titreText);
-    Button* quit = creerStg("QUIT", 150, 40, titreText->boundingRect().width()/2 - 75, 220, 0, false, titreText);
+    Button* joue = creerStg(jouer, 150, 40, titreText->boundingRect().width()/2 - 75, 190, 0, true, titreText);
+    Button* quit = creerStg("QUITTER", 150, 40, titreText->boundingRect().width()/2 - 75, 240, 0, false, titreText);
 
     Q_UNUSED(joue);
     Q_UNUSED(quit);
@@ -118,6 +118,7 @@ void Jeu::afficherMenu(QString titre, QString jouer)
 void Jeu::finJeu()
 {
     afficherFin("Fin De Jeu", "ReJeouer");
+    score->afficherScore();
     background_music->stopMusic();
     findejeu_music->playMusic();
     sceneDeJeu->removeItem(serp);
@@ -131,7 +132,6 @@ Button* Jeu::creerStg(QString text, int w, int h, int xpos, int ypos, int stg, b
         button = new Button(text, w, h, stg, true, pere);
         if(stg <= StageCourant){
             button->deletelock();
-            qDebug() << "set Hovered";
         }
         button->setHoverd();
         connect(button, SIGNAL(clicked(int)),this,SLOT(creerObs(int)));
@@ -174,6 +174,12 @@ void Jeu::debut()
         delete pauseText;
         pauseText = NULL;
     }
+    if(score->scoreText != NULL){
+        sceneDeJeu->removeItem(score->scoreText);
+        delete score->scoreText;
+        score->scoreText = NULL;
+    }
+
     if(titreText != NULL){
         sceneDeJeu->removeItem(titreText);
         delete titreText;
@@ -197,12 +203,12 @@ void Jeu::creerObs(int NumObs)
         obs = NULL;
     }
     if(NumObs != 0 && obs == NULL){
-    obs = new Obstacles(NumObs);
-    sceneDeJeu->addItem(obs);
-    background->setPixmap(QPixmap(obs->bg).scaled(1200,600));
-    background->setZValue(0);
-    sceneDeJeu->addItem(background);
-    }
+        obs = new Obstacles(NumObs);
+        sceneDeJeu->addItem(obs);
+        background->setPixmap(QPixmap(obs->bg).scaled(1200,600));
+        background->setZValue(0);
+        sceneDeJeu->addItem(background);
+        }
     debut();
 }
 
@@ -214,27 +220,21 @@ void Jeu::afficherStages()
         titreText =NULL;
     }
     stagesText = new QGraphicsTextItem("STAGES");
-    QFont titreFont(font, 50 );
     stagesText->setDefaultTextColor(Qt::white);
-    stagesText->setFont(titreFont);
-    int xPos = width()/2 - stagesText->boundingRect().width()/2;
-    int yPos = 100;
-    stagesText->setPos(xPos, yPos);
+    stagesText->setFont(QFont(font, 50));
+    stagesText->setPos(width()/2 - stagesText->boundingRect().width()/2, 100);
+    stagesText->setDefaultTextColor(Qt::white);
     sceneDeJeu->addItem(stagesText);
 
-    Button* stage = creerStg("1", 50, 50, 0,100, 1, true, stagesText);
+    Button* stage = creerStg("1", 50, 50, -50,100, 1, true, stagesText);
 
-
-    int x = 60;
-    Button* stage2 = creerStg("2", 50, 50, x ,100, 2, true, stagesText);
+    Button* stage2 = creerStg("2", 50, 50, 25 ,100, 2, true, stagesText);
     Button* stage3 = creerStg("3", 50, 50, 100,100, 3, true, stagesText);
     Button* stage4 = creerStg("4", 50, 50, 175,100, 4, true, stagesText);
     Button* stage5 = creerStg("5", 50, 50, 250,100, 5, true, stagesText);
 
     Button* retour = new Button("<< RETOUR", 100, 50, stagesText);
-    int rx = stagesText->boundingRect().width()/2 - retour->boundingRect().width()/2;
-    int ry = 400;
-    retour->setPos(rx,ry);
+    retour->setPos(stagesText->boundingRect().width()/2 - retour->boundingRect().width()/2,400);
     connect(retour, SIGNAL(clicked()), this, SLOT(retourAffich()));
 
 
@@ -253,21 +253,19 @@ void Jeu::afficherPause()
         delete choixText;
         choixText = NULL;
     }
+    score->afficherScore();
+
     pauseText = new QGraphicsTextItem("PAUSE");
-    QFont titreFont("arial", 50 );
-    pauseText->setFont(titreFont);
-    int xPos = width()/2 - pauseText->boundingRect().width()/2;
-    int yPos = 100;
-    pauseText->setPos(xPos, yPos);
+    pauseText->setFont(QFont("arial", 50 ));
+    pauseText->setPos(width()/2 - pauseText->boundingRect().width()/2, 100);
+    pauseText->setDefaultTextColor(Qt::white);
     sceneDeJeu->addItem(pauseText);
     Button* commancer = new Button("COMMANCER", 150, 40, pauseText);
-    commancer->setPos(100,140);
+    commancer->setPos(70,140);
     connect(commancer, SIGNAL(clicked()), this, SLOT(commancer()) );
-    Button* recommancer = creerStg("Recommancer", 150, 40, 100, 170, 0, true, pauseText);
+    Button* recommancer = creerStg("Recommancer", 150, 40, 70, 200, 0, true, pauseText);
     Button* routeur = new Button("<< RETOUR", 100, 50, pauseText);
-    int rx = 20;
-    int ry = 400;
-    routeur->setPos(rx,ry);
+    routeur->setPos(80,400);
     connect(routeur, SIGNAL(clicked()), this, SLOT(choix()) );
 
     Q_UNUSED(recommancer);
@@ -288,22 +286,22 @@ void Jeu::choix()
         delete titreText;
         titreText = NULL;
     }
+    if(score->scoreText != NULL){
+        sceneDeJeu->removeItem(score->scoreText);
+        delete score->scoreText;
+        score->scoreText = NULL;
+    }
+
     choixText = new QGraphicsTextItem("WARNING");
-    QFont titreFont("arial", 50 );
-    choixText->setFont(titreFont);
-    int xPos = width()/2 - choixText->boundingRect().width()/2;
-    int yPos = 100;
-    choixText->setPos(xPos, yPos);
+    choixText->setFont(QFont("arial", 50 ));
+    choixText->setPos(width()/2 - choixText->boundingRect().width()/2, 100);
+    choixText->setDefaultTextColor(Qt::white);
     sceneDeJeu->addItem(choixText);
     Button* oui = new Button("OUI", 50, 50, choixText);
-    int rx = 30;
-    int ry = 100;
-    oui->setPos(rx,ry);
+    oui->setPos(110,100);
     connect(oui, SIGNAL(clicked()), this, SLOT(routeurMenu()) );
     Button* non = new Button("NON", 50, 50, choixText);
-    int nx = 100;
-    int ny = 100;
-    non->setPos(nx,ny);
+    non->setPos(180,100);
     connect(non, SIGNAL(clicked()), this, SLOT(afficherPause()) );
 }
 
@@ -324,6 +322,12 @@ void Jeu::retourAffich()
         delete titreText;
         titreText = NULL;
     }
+    if(score->scoreText != NULL){
+        sceneDeJeu->removeItem(score->scoreText);
+        delete score->scoreText;
+        score->scoreText = NULL;
+    }
+
     background_music->stopMusic();
     afficherMenu("Jeu Serpent ", "Jouer");
 
@@ -344,6 +348,11 @@ void Jeu::commancer()
             sceneDeJeu->removeItem(pauseText);
             delete pauseText;
             pauseText = NULL;
+        }
+        if(score->scoreText != NULL){
+            sceneDeJeu->removeItem(score->scoreText);
+            delete score->scoreText;
+            score->scoreText = NULL;
         }
     }
 
@@ -374,6 +383,12 @@ void Jeu::routeurMenu()
         delete titreText;
         titreText = NULL;
     }
+    if(score->scoreText != NULL){
+        sceneDeJeu->removeItem(score->scoreText);
+        delete score->scoreText;
+        score->scoreText = NULL;
+    }
+
     background_music->stopMusic();
     afficherMenu("Jeu Serpent ", "Jouer");
 }

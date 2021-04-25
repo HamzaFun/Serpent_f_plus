@@ -39,7 +39,7 @@ void Obstacles::ajouterMurPart(int x, int y)
 
 void Obstacles::crearObs1()
 {
-    bg = ":/bg/bg/bg1.jpg";
+    bg = ":/bg/bg1.jpg";
     MurPart* mur = new MurPart(this);
     mur->setPos(0,0);
     int s=40;
@@ -67,7 +67,7 @@ void Obstacles::crearObs1()
 
 void Obstacles::crearObs2()
 {
-    bg = ":/bg/bg/bg2.png";
+    bg = ":/bg/bg2.png";
     MurPart* mur = new MurPart(this);
     mur->setPos(0,0);
     int s=40;
@@ -98,7 +98,7 @@ void Obstacles::crearObs2()
 
 void Obstacles::crearObs3()
 {
-    bg = ":/bg/bg/bg2.png";
+    bg = ":/bg/bg2.png";
     int s=0;
     for(int i=0; i < 15; ++i){
         ajouterMurPart(560,s);
@@ -118,7 +118,7 @@ void Obstacles::crearObs3()
 
 void Obstacles::crearObs4()
 {
-    bg = ":/bg/bg/bg1.jpg";
+    bg = ":/bg/bg1.jpg";
     MurPart* mur = new MurPart(this);
     mur->setPos(0,0);
     int s=0;
@@ -152,7 +152,7 @@ void Obstacles::crearObs4()
 
 void Obstacles::crearObs5()
 {
-    bg = ":/bg/bg/bg3.jpg";
+    bg = ":/bg/bg3.jpg";
     MurPart* mur = new MurPart(this);
     mur->setPos(0,0);
     int s=40;
