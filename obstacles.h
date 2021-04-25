@@ -15,6 +15,9 @@ public:
 private:
     void crearObs1();
     void crearObs2();
+    void crearObs3();
+    void crearObs4();
+    void crearObs5();
 
 };
 

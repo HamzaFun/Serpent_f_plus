@@ -10,11 +10,13 @@ CONFIG += c++11
 
 SOURCES += \
     animerserpent.cpp \
+    backmusic.cpp \
     button.cpp \
     fruit.cpp \
     jeu.cpp \
     main.cpp \
     murpart.cpp \
+    music.cpp \
     obstacles.cpp \
     score.cpp \
     serppart.cpp \
@@ -22,10 +24,12 @@ SOURCES += \
 
 HEADERS += \
     animerserpent.h \
+    backmusic.h \
     button.h \
     fruit.h \
     jeu.h \
     murpart.h \
+    music.h \
     obstacles.h \
     score.h \
     serppart.h \

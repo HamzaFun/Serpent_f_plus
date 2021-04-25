@@ -13,6 +13,7 @@ public:
 
     QString dir;
     QMediaPlayer* coin_1;
+    QMediaPlayer* coin_2;
 private slots:
     void coin1s();
     void coin2s();

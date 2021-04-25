@@ -27,8 +27,9 @@ Jeu::Jeu(QWidget *parent):QGraphicsView(parent)
     sceneDeJeu->setSceneRect(0,0,1200,600);
     setScene(sceneDeJeu);
 
-    background_music = creerMusic("qrc:/Sounds/ingame_music1.mp3");
-    menu_music = creerMusic("qrc:/Sounds/menu_music2.mp3");
+    background_music = new Music("ingame_music1.mp3", this);
+    menu_music = new Music("menu_music2.mp3", this);
+    findejeu_music = new Music("gameover_music.mp3");
 
     score =new Score();
     sceneDeJeu->addItem(score);
@@ -63,28 +64,30 @@ void Jeu::afficherFin(QString titre, QString jouer)
     titreText->setPos(xPos, yPos);
     sceneDeJeu->addItem(titreText);
 
-    Button* stages = new Button("STAGES", 150,40, titreText);
-    int mxPos = titreText->boundingRect().width()/2 - stages->boundingRect().width()/2 ;
-    int myPos = 120;
-    stages->setPos(mxPos,myPos);
+//    Button* stages = new Button("STAGES", 150,40, titreText);
+//    int mxPos = titreText->boundingRect().width()/2 - stages->boundingRect().width()/2 ;
+//    int myPos = 120;
+//    stages->setPos(mxPos,myPos);
+//    connect(stages, SIGNAL(clicked()), this, SLOT(afficherStages()));
 
-    connect(stages, SIGNAL(clicked()), this, SLOT(afficherStages()));
 
     Button* joue = creerStg(jouer, 150, 40, titreText->boundingRect().width()/2 - 75, 170, 0, true, titreText);
     Button* quit = new Button("<< RETOUR", 150, 40, titreText);
     int rx = titreText->boundingRect().width()/2 - quit->boundingRect().width()/2;
     int ry = 220;
     quit->setPos(rx,ry);
-    connect(quit, SIGNAL(clicked()), this, SLOT(retourAffich()));
+    connect(quit, SIGNAL(clicked()), this, SLOT(routeurMenu()));
+
     Q_UNUSED(joue);
     Q_UNUSED(quit);
 
 }
 void Jeu::afficherMenu(QString titre, QString jouer)
 {
-    if(menu_music->state() == QMediaPlayer::StoppedState){
-        menu_music->play();
-    }
+    findejeu_music->stopMusic();
+    background_music->stopMusic();
+    menu_music->playMusic();
+
     background->setPixmap(QPixmap(":/bg/menu.jpg").scaled(1200,600));
     background->setZValue(0);
     sceneDeJeu->addItem(background);
@@ -115,22 +118,10 @@ void Jeu::afficherMenu(QString titre, QString jouer)
 void Jeu::finJeu()
 {
     afficherFin("Fin De Jeu", "ReJeouer");
+    background_music->stopMusic();
+    findejeu_music->playMusic();
     sceneDeJeu->removeItem(serp);
     serp = NULL;
-    if(background_music->state() == QMediaPlayer::PlayingState){
-        background_music->stop();
-    }
-}
-
-QMediaPlayer *Jeu::creerMusic(QString music)
-{
-    QMediaPlaylist* playList = new QMediaPlaylist(this);
-    QMediaPlayer *media = new QMediaPlayer(this);
-    playList->addMedia(QUrl(music));
-    playList->setPlaybackMode(QMediaPlaylist::Loop);
-    media->setPlaylist(playList);
-    media->setVolume(30);
-    return media;
 }
 
 Button* Jeu::creerStg(QString text, int w, int h, int xpos, int ypos, int stg, bool debut, QGraphicsTextItem *pere)
@@ -164,16 +155,13 @@ Button* Jeu::creerStg(QString text, int w, int h, int xpos, int ypos, int stg, b
 
 void Jeu::debut()
 {
+    menu_music->stopMusic();
+    findejeu_music->stopMusic();
+    background_music->playMusic();
     if(obs == NULL){
     background->setPixmap(QPixmap(":/bg/bg4.png").scaled(1200,600));
     background->setZValue(0);
     sceneDeJeu->addItem(background);
-    }
-    if(menu_music->state() == QMediaPlayer::PlayingState){
-        menu_music->stop();
-    }
-    if(background_music->state() == QMediaPlayer::StoppedState){
-        background_music->play();
     }
     serp = new AnimerSerpent();
     serp->setFlag(QGraphicsItem::ItemIsFocusable);
@@ -225,7 +213,6 @@ void Jeu::afficherStages()
         delete titreText;
         titreText =NULL;
     }
-    int x = 60;
     stagesText = new QGraphicsTextItem("STAGES");
     QFont titreFont(font, 50 );
     stagesText->setDefaultTextColor(Qt::white);
@@ -238,9 +225,11 @@ void Jeu::afficherStages()
     Button* stage = creerStg("1", 50, 50, 0,100, 1, true, stagesText);
 
 
+    int x = 60;
     Button* stage2 = creerStg("2", 50, 50, x ,100, 2, true, stagesText);
-    Button* stage3 = creerStg("3", 50, 50, 2*x,100, 3, true, stagesText);
-    Button* stage4 = creerStg("4", 50, 50, 3*x,100, 4, true, stagesText);
+    Button* stage3 = creerStg("3", 50, 50, 100,100, 3, true, stagesText);
+    Button* stage4 = creerStg("4", 50, 50, 175,100, 4, true, stagesText);
+    Button* stage5 = creerStg("5", 50, 50, 250,100, 5, true, stagesText);
 
     Button* retour = new Button("<< RETOUR", 100, 50, stagesText);
     int rx = stagesText->boundingRect().width()/2 - retour->boundingRect().width()/2;
@@ -253,6 +242,7 @@ void Jeu::afficherStages()
     Q_UNUSED(stage2);
     Q_UNUSED(stage3);
     Q_UNUSED(stage4);
+    Q_UNUSED(stage5);
 }
 
 void Jeu::afficherPause()
@@ -292,6 +282,12 @@ void Jeu::choix()
         delete pauseText;
         pauseText = NULL;
     }
+    if(titreText != NULL)
+    {
+        sceneDeJeu->removeItem(titreText);
+        delete titreText;
+        titreText = NULL;
+    }
     choixText = new QGraphicsTextItem("WARNING");
     QFont titreFont("arial", 50 );
     choixText->setFont(titreFont);
@@ -328,6 +324,7 @@ void Jeu::retourAffich()
         delete titreText;
         titreText = NULL;
     }
+    background_music->stopMusic();
     afficherMenu("Jeu Serpent ", "Jouer");
 
 }
@@ -372,6 +369,12 @@ void Jeu::routeurMenu()
         delete pauseText;
         pauseText = NULL;
     }
+    if(titreText != NULL){
+        sceneDeJeu->removeItem(titreText);
+        delete titreText;
+        titreText = NULL;
+    }
+    background_music->stopMusic();
     afficherMenu("Jeu Serpent ", "Jouer");
 }
 

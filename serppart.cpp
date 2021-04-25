@@ -119,6 +119,7 @@ void SerpPart::checkCollidingObject()
                 jeu->score->setScore(jeu->score->getScore()+ f->score);
                 delete f;
                 if(jeu->score->getScore() == l){
+                    emit jeu->sfx->coin2();
                     emit mangerF();
                     l += 5;
                 }else{

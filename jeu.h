@@ -8,6 +8,7 @@
 #include "obstacles.h"
 #include "score.h"
 #include "soundeffects.h"
+#include "music.h"
 
 class Jeu : public QGraphicsView
 {
@@ -28,9 +29,9 @@ public:
     Obstacles* obs = NULL;
     Button* b;
 
-    QMediaPlayer* background_music;
-    QMediaPlayer* menu_music;
-    QMediaPlayer* findejeu_music;
+    Music* background_music;
+    Music* menu_music;
+    Music* findejeu_music;
 
     int stg;
     int StageCourant;
