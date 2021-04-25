@@ -20,6 +20,8 @@ public:
     AnimerSerpent* serp;
     AnimerSerpent* serp2;
 
+    Music kjh;
+
     QGraphicsTextItem* titreText = NULL;
     QGraphicsTextItem* pauseText = NULL;
     QGraphicsTextItem* choixText = NULL;
