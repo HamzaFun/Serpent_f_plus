@@ -9,7 +9,7 @@
 extern Jeu* jeu;
 
 SerpPart::SerpPart(QGraphicsItem* parent):QGraphicsPixmapItem(parent)
-, image("1")
+, image("2")
 , pas(40)
 {
     setZValue(1);
@@ -178,8 +178,7 @@ void SerpPart::setImage()
         if(direction == "LEFT" ||direction ==  "RIGHT")
             setPixmap(QPixmap(QString(":/skins/%1left-right.png").arg(image)).scaled(40,40));
         else if (direction == "UP" || direction == "DOWN")
-            setPixmap(QPixmap(QString(":/snake/skins/%1up-down.png").arg(image)).scaled(40,40));
-
+            setPixmap(QPixmap(QString(":/skins/%1up-down.png").arg(image)).scaled(40,40));
         }
         else{
             if((direction == "UP" && this->Preced()->Direction() == "LEFT")

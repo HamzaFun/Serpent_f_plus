@@ -79,5 +79,19 @@
         <file>Sounds/sfx/lose1.wav</file>
         <file>Sounds/sfx/lose2.wav</file>
         <file>Sounds/sfx/lose3.wav</file>
+        <file>skins/2head.png</file>
+        <file>skins/2headDown.png</file>
+        <file>skins/2headLeft.png</file>
+        <file>skins/2headup.png</file>
+        <file>skins/2left-right.png</file>
+        <file>skins/2leftUp-downRight.png</file>
+        <file>skins/2rightUp-downLeft.png</file>
+        <file>skins/2tail.png</file>
+        <file>skins/2tailDown.png</file>
+        <file>skins/2tailLeft.png</file>
+        <file>skins/2tailUp.png</file>
+        <file>skins/2up-down.png</file>
+        <file>skins/2upLeft-rightDown.png</file>
+        <file>skins/2upRight-leftDown.png</file>
     </qresource>
 </RCC>

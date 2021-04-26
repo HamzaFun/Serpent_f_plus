@@ -1,8 +1,12 @@
 #include "murpart.h"
 
-MurPart::MurPart(QGraphicsItem* parent):QGraphicsPixmapItem(parent)
+MurPart::MurPart(QString mur, QGraphicsItem* parent):QGraphicsPixmapItem(parent)
 {
-    setPixmap(QPixmap(":/images/mur.png").scaled(40,40));
+    murtype = "mur.png";
+    if(mur != NULL)
+        murtype = mur;
+
+    setPixmap(QPixmap(":/images/"+murtype).scaled(40,40));
     setPos(0,0);
     setZValue(5);
 }

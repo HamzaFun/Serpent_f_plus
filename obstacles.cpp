@@ -33,14 +33,14 @@ Obstacles::Obstacles(int Num,QGraphicsItem* parent):QGraphicsRectItem(parent)
 
 void Obstacles::ajouterMurPart(int x, int y)
 {
-    MurPart* part = new MurPart(this);
+    MurPart* part = new MurPart(NULL,this);
     part->setPos(x,y);
 }
 
 void Obstacles::crearObs1()
 {
     bg = ":/bg/bg/bg1.jpg";
-    MurPart* mur = new MurPart(this);
+    MurPart* mur = new MurPart(NULL,this);
     mur->setPos(0,0);
     int s=40;
     for(int i =0; i < 29; ++i){
@@ -68,7 +68,7 @@ void Obstacles::crearObs1()
 void Obstacles::crearObs2()
 {
     bg = ":/bg/bg/bg2.png";
-    MurPart* mur = new MurPart(this);
+    MurPart* mur = new MurPart(NULL,this);
     mur->setPos(0,0);
     int s=40;
     for(int i =0; i < 29; ++i){
@@ -119,7 +119,7 @@ void Obstacles::crearObs3()
 void Obstacles::crearObs4()
 {
     bg = ":/bg/bg/bg1.jpg";
-    MurPart* mur = new MurPart(this);
+    MurPart* mur = new MurPart(NULL,this);
     mur->setPos(0,0);
     int s=0;
     for(int i =0; i < 15; ++i){
@@ -153,7 +153,7 @@ void Obstacles::crearObs4()
 void Obstacles::crearObs5()
 {
     bg = ":/bg/bg/bg3.jpg";
-    MurPart* mur = new MurPart(this);
+    MurPart* mur = new MurPart(NULL,this);
     mur->setPos(0,0);
     int s=40;
     for(int i =0; i < 13; i++){

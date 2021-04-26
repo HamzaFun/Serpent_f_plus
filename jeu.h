@@ -45,6 +45,8 @@ private:
     QMediaPlayer* creerMusic(QString music);
     Button* creerStg(QString text, int w, int h, int xpos, int ypos, int stg, bool debut, QGraphicsTextItem* pere);
     QString font;
+    QGraphicsTextItem* textremove(QGraphicsTextItem* text);
+    QGraphicsTextItem* creertext(QString titre, QString font,Qt::GlobalColor couleur);
 public slots:
     void debut();
     void creerObs(int);
@@ -55,7 +57,6 @@ public slots:
     void commancer();
     void routeurMenu();
     void stageSuiv();
-    void ha();
 
 };
 

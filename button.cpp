@@ -27,7 +27,7 @@ Button::Button(QString name,int width, int height, QGraphicsItem* parent):QGraph
     text->setFont(font);
     setAcceptHoverEvents(true);
 }
-Button::Button(QString name,int width, int height, int stg, bool locked, QGraphicsItem* parent):QGraphicsRectItem(parent)
+Button::Button(QString name,int width, int height, int stg, QGraphicsItem* parent):QGraphicsRectItem(parent)
 {
     stgNum = stg;
     setRect(0,0,width,height);
@@ -48,18 +48,16 @@ Button::Button(QString name,int width, int height, int stg, bool locked, QGraphi
 
     text->setFont(font);
     setAcceptHoverEvents(true);
-//    if(locked && stgNum != 1){
-        locke = new QGraphicsPixmapItem(this);
-        locke->setPixmap(QPixmap(":/svgs/lock.png").scaled(30,30,Qt::KeepAspectRatio));
-        locke->setPos(pos().x()+15, pos().y()+15);
-        locke->setZValue(10);
-//    }
+    locke = new QGraphicsPixmapItem(this);
+    locke->setPixmap(QPixmap(":/svgs/lock.png").scaled(30,30,Qt::KeepAspectRatio));
+    locke->setPos(pos().x()+15, pos().y()+15);
+    locke->setZValue(10);
+
 }
 void Button::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     if(event)
     {
-//        if(stgNum != 0) emit clicked(stgNum);
         emit clicked(stgNum);
         emit clicked();
     }
@@ -103,10 +101,12 @@ void Button::deletelock()
 void Button::setHoverd()
 {
     if(locke != NULL){
+    setOpacity(80);
     setAcceptedMouseButtons(Qt::NoButton);
     setAcceptHoverEvents(false);
     }
     else{
+        setOpacity(100);
         setAcceptedMouseButtons(Qt::AllButtons);
         setAcceptHoverEvents(true);
         deletelock();

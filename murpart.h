@@ -6,7 +6,9 @@
 class MurPart : public QGraphicsPixmapItem
 {
 public:
-    MurPart(QGraphicsItem* parent= 0);
+    MurPart(QString mur, QGraphicsItem* parent= 0);
+
+    QString murtype;
 };
 
 #endif // MURPART_H

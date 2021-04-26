@@ -9,7 +9,7 @@ class Button :public QObject, public QGraphicsRectItem
     Q_OBJECT
 public:
     Button(QString name,int width, int height, QGraphicsItem * parent = NULL);
-    Button(QString name,int width, int height,int stg, bool locked, QGraphicsItem * parent = NULL);
+    Button(QString name,int width, int height,int stg, QGraphicsItem * parent = NULL);
 
 
     QGraphicsPixmapItem* locke = NULL;
