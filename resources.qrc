@@ -109,5 +109,6 @@
         <file>skins/3up-down.png</file>
         <file>skins/3upLeft-rightDown.png</file>
         <file>skins/3upRight-leftDown.png</file>
+        <file>bg/snakeIcon.png</file>
     </qresource>
 </RCC>

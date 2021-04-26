@@ -6,6 +6,7 @@
 #include <QThread>
 #include <qevent.h>
 #include "jeu.h"
+#include "button.h"
 
 extern Jeu* jeu;
 
@@ -33,7 +34,21 @@ AnimerSerpent::AnimerSerpent(QGraphicsItem* parent):QGraphicsRectItem(parent)
     connect( serpTete, SIGNAL(mangerF()), this, SLOT(ajouterFruit2()));
 
 
-
+    switch(jeu->niv){
+    case Button::Niveau::facile :
+        qDebug() << "facile";
+        vitesse = 160;
+        break;
+    case Button::Niveau::normale :
+        vitesse = 120;
+        break;
+    case Button::Niveau::difficile :
+        vitesse = 90;
+        break;
+    default:
+        vitesse = 120;
+        break;
+    }
 
     direction = "RIGHT";
 
@@ -58,11 +73,10 @@ void AnimerSerpent::keyPressEvent(QKeyEvent *event)
     else if(event->key() == Qt::Key_Up &&serpTete->Direction()  != "DOWN") {
         direction = "UP";
     }
-    else if(event->key() == Qt::Key_Right && serpTete->Direction()  != "LEFT") {
+    else if(event->key() == Qt::Key_Right && serpTete->Direction()  != "LEFT" && serpTete->y() > 0) {
             direction = "RIGHT";
-
     }
-    else if(event->key() == Qt::Key_Left && serpTete->Direction()  != "RIGHT" ) {
+    else if(event->key() == Qt::Key_Left && serpTete->Direction()  != "RIGHT" && serpTete->y() > 0) {
             direction = "LEFT";
     }
     else if(event->key() == Qt::Key_Space){
@@ -71,7 +85,7 @@ void AnimerSerpent::keyPressEvent(QKeyEvent *event)
             text->setVisible(true);
         }
         else{
-            t->start(90);
+            t->start(vitesse);
             text->setVisible(false);
         }
 
@@ -82,7 +96,7 @@ void AnimerSerpent::keyPressEvent(QKeyEvent *event)
             jeu->afficherPause();
         }
         else{
-            t->start(90);
+            t->start(vitesse);
             if(jeu->pauseText != NULL)
             {
                 jeu->sceneDeJeu->removeItem(jeu->pauseText);

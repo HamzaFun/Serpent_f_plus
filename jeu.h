@@ -24,7 +24,7 @@ public:
     QGraphicsTextItem* pauseText = NULL;
     QGraphicsTextItem* choixText = NULL;
     QGraphicsTextItem* stagesText = NULL;
-
+    QGraphicsTextItem* niveauText = NULL;
     Score* score;
     Obstacles* obs = NULL;
     Button* b;
@@ -33,17 +33,20 @@ public:
     Music* menu_music;
     Music* findejeu_music;
 
+    Button::Niveau niv;
+
     int stg;
     int StageCourant;
 
     void keyPressEvent(QKeyEvent *event);
     void afficherMenu(QString titre, QString jouer);
     void afficherFin(QString titre, QString jouer);
+    void afficherNiveau(QString titre, QString jouer);
     void finJeu();
 private:
     QGraphicsPixmapItem* background;
     QMediaPlayer* creerMusic(QString music);
-    Button* creerStg(QString text, int w, int h, int xpos, int ypos, int stg, bool debut, QGraphicsTextItem* pere);
+    Button* creerStg(QString text, int w, int h, int xpos, int ypos, int stg, QString debut, QGraphicsTextItem* pere);
     QString font;
     QGraphicsTextItem* textremove(QGraphicsTextItem* text);
     QGraphicsTextItem* creertext(QString titre, QString font,Qt::GlobalColor couleur);
@@ -53,10 +56,11 @@ public slots:
     void afficherStages();
     void afficherPause();
     void choix();
-    void retourAffich();
-    void commancer();
     void routeurMenu();
+    void commancer();
     void stageSuiv();
+    void niveau();
+    void setNiv(Button::Niveau);
 };
 
 #endif // JEU_H

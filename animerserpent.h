@@ -16,7 +16,7 @@ public:
     void animer();
     QTimer* t;
     QMediaPlayer* eatSound;
-
+    int vitesse;
 public slots:
     void move();
     void ajouterFruit();

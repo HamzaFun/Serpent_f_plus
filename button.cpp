@@ -1,10 +1,13 @@
 #include "button.h"
+#include "jeu.h"
 
 #include <QBrush>
 #include <QColor>
 #include <QCursor>
 #include <QFont>
 #include <QPen>
+
+extern Jeu* jeu;
 
 Button::Button(QString name,int width, int height, QGraphicsItem* parent):QGraphicsRectItem(parent)
 {
@@ -54,12 +57,34 @@ Button::Button(QString name,int width, int height, int stg, QGraphicsItem* paren
     locke->setZValue(10);
 
 }
+Button::Button(QString name,int width, int height,Niveau niveau, QGraphicsItem* parent):QGraphicsRectItem(parent)
+{
+    this->niveau = niveau;
+    setRect(0,0,width,height);
+    QBrush brush;
+    QFont font;
+    brush.setStyle(Qt::SolidPattern);
+    brush.setColor(QColor("#240b36"));
+    setBrush(brush);
+    font.setBold(true);
+    font.setWeight(100);
+
+    text = new QGraphicsTextItem(name,this);
+    text->setPos(rect().width()/2 - text->boundingRect().width()/2,rect().height()/2 - text->boundingRect().height()/2);
+    text->setDefaultTextColor(Qt::white);
+
+    text->setFont(font);
+    setAcceptHoverEvents(true);
+}
 void Button::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     if(event)
     {
-        emit clicked(stgNum);
-        emit clicked();
+        if(stgNum != 0)
+            emit clicked(stgNum);
+        else
+            emit clicked();
+        emit clicked(niveau);
     }
 
 }

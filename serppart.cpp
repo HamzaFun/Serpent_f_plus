@@ -5,6 +5,7 @@
 #include <QList>
 #include <QDebug>
 #include <QMediaPlayer>
+#include <QThread>
 
 extern Jeu* jeu;
 
