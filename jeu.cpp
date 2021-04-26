@@ -25,6 +25,7 @@ Jeu::Jeu(QWidget *parent):QGraphicsView(parent)
     sfx = new SoundEffects(this);
     sceneDeJeu->setSceneRect(0,0,1200,600);
     setScene(sceneDeJeu);
+    background->setZValue(0);
 
     //initialiser la music
     background_music = new Music("ingame_music1.mp3", this);
@@ -50,7 +51,7 @@ void Jeu::keyPressEvent(QKeyEvent *event)
 }
 void Jeu::afficherFin(QString titre, QString jouer)
 {
-    titreText = creertext(titre, "baloo 2", Qt::white);
+    titreText = creertext(titre, "baloo 2", Qt::black);
 
     Button* joue = creerStg(jouer, 150, 40, titreText->boundingRect().width()/2 - 75, 170, 0, true, titreText);
     Button* quit = new Button("<< RETOUR", 150, 40, titreText);
@@ -69,8 +70,7 @@ void Jeu::afficherMenu(QString titre, QString jouer)
     background_music->stopMusic();
     menu_music->playMusic();
 
-    background->setPixmap(QPixmap(":/bg/menu.jpg").scaled(1200,600));
-    background->setZValue(0);
+    background->setPixmap(QPixmap(":/bg/imageMenu.jpg").scaled(1200,600));
     sceneDeJeu->addItem(background);
 
     titreText = creertext(titre, "baloo 2", Qt::white);
@@ -156,9 +156,8 @@ void Jeu::debut()
     findejeu_music->stopMusic();
     background_music->playMusic();
 
-    if(obs == NULL){
-    background->setPixmap(QPixmap(":/bg/bg4.png").scaled(1200,600));
-    background->setZValue(0);
+    if(obs == NULL ){
+    background->setPixmap(QPixmap(":/bg/blackbg.jpg").scaled(1200,600));
     sceneDeJeu->addItem(background);
     }
 

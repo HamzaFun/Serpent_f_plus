@@ -8,8 +8,9 @@
 
 extern Jeu* jeu;
 
+QString SerpPart::image = "1";
+
 SerpPart::SerpPart(QGraphicsItem* parent):QGraphicsPixmapItem(parent)
-, image("2")
 , pas(40)
 {
     setZValue(1);
@@ -196,6 +197,11 @@ void SerpPart::setImage()
         }
 
     }
+}
+
+void SerpPart::setImage(QString valeur)
+{
+    image = valeur;
 }
 
 

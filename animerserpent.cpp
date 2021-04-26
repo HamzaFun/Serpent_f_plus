@@ -17,6 +17,7 @@ AnimerSerpent::AnimerSerpent(QGraphicsItem* parent):QGraphicsRectItem(parent)
     serpTete->setDirection("RIGHT");
     serpTete->part = "HEAD";
     serpTete->setImage();
+    serpTete->setImage("2");
     serpQueue = serpTete;
     connect(serpTete, SIGNAL(finStage()), jeu, SLOT(stageSuiv()));
     t = new QTimer();

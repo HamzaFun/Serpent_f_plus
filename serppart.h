@@ -26,8 +26,9 @@ public:
     QString part;
     void setImage();
 
-    QString image;
-    void setImage(QString valeur);
+    static QString image;
+    static void setImage(QString valeur);
+
     int pas;
     int l=5;
 

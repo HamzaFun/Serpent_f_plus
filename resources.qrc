@@ -93,5 +93,21 @@
         <file>skins/2up-down.png</file>
         <file>skins/2upLeft-rightDown.png</file>
         <file>skins/2upRight-leftDown.png</file>
+        <file>bg/imageMenu.jpg</file>
+        <file>bg/blackbg.jpg</file>
+        <file>skins/3head.png</file>
+        <file>skins/3headDown.png</file>
+        <file>skins/3headLeft.png</file>
+        <file>skins/3headup.png</file>
+        <file>skins/3left-right.png</file>
+        <file>skins/3leftUp-downRight.png</file>
+        <file>skins/3rightUp-downLeft.png</file>
+        <file>skins/3tail.png</file>
+        <file>skins/3tailDown.png</file>
+        <file>skins/3tailLeft.png</file>
+        <file>skins/3tailUp.png</file>
+        <file>skins/3up-down.png</file>
+        <file>skins/3upLeft-rightDown.png</file>
+        <file>skins/3upRight-leftDown.png</file>
     </qresource>
 </RCC>
