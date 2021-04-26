@@ -24,6 +24,7 @@ public:
     QGraphicsTextItem* pauseText = NULL;
     QGraphicsTextItem* choixText = NULL;
     QGraphicsTextItem* stagesText = NULL;
+    QGraphicsTextItem* niveauText = NULL;
 
     Score* score;
     Obstacles* obs = NULL;
@@ -39,6 +40,7 @@ public:
     void keyPressEvent(QKeyEvent *event);
     void afficherMenu(QString titre, QString jouer);
     void afficherFin(QString titre, QString jouer);
+    void afficherNiveau(QString titre, QString jouer);
     void finJeu();
 private:
     QGraphicsPixmapItem* background;
@@ -55,6 +57,10 @@ public slots:
     void commancer();
     void routeurMenu();
     void stageSuiv();
+    void niveau();
+//    void niveauBas();
+//    void niveauMoyenne();
+//    void niveauHaut();
 };
 
 #endif // JEU_H

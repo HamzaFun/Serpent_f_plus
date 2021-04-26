@@ -34,7 +34,7 @@ Jeu::Jeu(QWidget *parent):QGraphicsView(parent)
 
     score =new Score();
     sceneDeJeu->addItem(score);
-    serp2 =NULL;
+    serp2 = NULL;
     serp = NULL;
     setWindowIcon(QIcon(":/images/snake.ico"));
 
@@ -81,6 +81,31 @@ void Jeu::afficherFin(QString titre, QString jouer)
 
 }
 
+void Jeu::afficherNiveau(QString titre, QString jouer)
+{
+    niveauText = new QGraphicsTextItem(titre);
+    niveauText->setDefaultTextColor(Qt::white);
+    niveauText->setFont(QFont(font, 50));
+    niveauText->setPos(width()/2 - niveauText->boundingRect().width()/2, 150);
+    sceneDeJeu->addItem(niveauText);
+
+    Button* facile = new Button(jouer, 150, 40, 0, niveauText);
+    facile->setPos(niveauText->boundingRect().width()/2 - 75,160);
+    connect(facile, SIGNAL(clicked(int)), this, SLOT(debut()));
+
+    Button* moyenne = new Button("MOYENNE", 150, 40, 1, niveauText);
+    moyenne->setPos(niveauText->boundingRect().width()/2 - 75,210);
+    connect(moyenne, SIGNAL(clicked(int)), this, SLOT(debut()));
+
+    Button* difficile = new Button("DIFFICILE", 150, 40, 2, niveauText);
+    difficile->setPos(niveauText->boundingRect().width()/2 - 75,260);
+    connect(difficile, SIGNAL(clicked(int)), this, SLOT(debut()));
+
+    Button* retour = new Button("<< RETOUR", 150, 40, niveauText);
+    retour->setPos(niveauText->boundingRect().width()/2 - 75,310);
+    connect(retour, SIGNAL(clicked()), this, SLOT(routeurMenu()));
+}
+
 void Jeu::afficherMenu(QString titre, QString jouer)
 {
     findejeu_music->stopMusic();
@@ -107,7 +132,10 @@ void Jeu::afficherMenu(QString titre, QString jouer)
 
     connect(menu, SIGNAL(clicked()), this, SLOT(afficherStages()));
 
-    Button* joue = creerStg(jouer, 150, 40, titreText->boundingRect().width()/2 - 75, 190, 0, true, titreText);
+    Button* joue = new Button(jouer, 150, 40, titreText);
+    joue->setPos(titreText->boundingRect().width()/2 - 75,190);
+    connect(joue, SIGNAL(clicked()), this, SLOT(niveau()));
+
     Button* quit = creerStg("QUITTER", 150, 40, titreText->boundingRect().width()/2 - 75, 240, 0, false, titreText);
 
     Q_UNUSED(joue);
@@ -150,18 +178,15 @@ Button* Jeu::creerStg(QString text, int w, int h, int xpos, int ypos, int stg, b
     return button;
 }
 
-
-
-
 void Jeu::debut()
 {
     menu_music->stopMusic();
     findejeu_music->stopMusic();
     background_music->playMusic();
     if(obs == NULL){
-    background->setPixmap(QPixmap(":/bg/bg4.png").scaled(1200,600));
-    background->setZValue(0);
-    sceneDeJeu->addItem(background);
+        background->setPixmap(QPixmap(":/bg/bg4.png").scaled(1200,600));
+        background->setZValue(0);
+        sceneDeJeu->addItem(background);
     }
     serp = new AnimerSerpent();
     serp->setFlag(QGraphicsItem::ItemIsFocusable);
@@ -169,10 +194,16 @@ void Jeu::debut()
     sceneDeJeu->addItem(serp);
     score->setVisible(true);
     score->setScore(0);
+
     if(pauseText != NULL){
         sceneDeJeu->removeItem(pauseText);
         delete pauseText;
         pauseText = NULL;
+    }
+    if(niveauText != NULL){
+        sceneDeJeu->removeItem(niveauText);
+        delete niveauText;
+        niveauText = NULL;
     }
     if(score->scoreText != NULL){
         sceneDeJeu->removeItem(score->scoreText);
@@ -322,6 +353,11 @@ void Jeu::retourAffich()
         delete titreText;
         titreText = NULL;
     }
+    if(niveauText != NULL){
+        sceneDeJeu->removeItem(niveauText);
+        delete niveauText;
+        niveauText = NULL;
+    }
     if(score->scoreText != NULL){
         sceneDeJeu->removeItem(score->scoreText);
         delete score->scoreText;
@@ -336,7 +372,16 @@ void Jeu::retourAffich()
 void Jeu::commancer()
 {
     if(!serp->t->isActive()){
-        serp->t->start(90);
+
+        if(b->nivNum == 0){
+            serp->t->start(160);
+        }else if(b->nivNum == 1){
+            serp->t->start(120);
+        }else if(b->nivNum == 2){
+            serp->t->start(80);
+        }else if(b->stgNum != 0)
+            serp->t->start(90);
+
         if(titreText != NULL)
         {
             sceneDeJeu->removeItem(titreText);
@@ -403,4 +448,12 @@ void Jeu::stageSuiv()
     creerObs(StageCourant);
 }
 
-
+void Jeu::niveau()
+{
+    if(titreText != NULL){
+        sceneDeJeu->removeItem(titreText);
+        delete titreText;
+        titreText = NULL;
+    }
+    afficherNiveau("NIVEAU", "FACILE");
+}

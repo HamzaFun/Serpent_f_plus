@@ -43,7 +43,7 @@ AnimerSerpent::AnimerSerpent(QGraphicsItem* parent):QGraphicsRectItem(parent)
     text->setVisible(true);
     text->setPlainText("Puiez sur Espace pour commancer");
     text->setPos(400,250);
-    text->setDefaultTextColor(Qt::BackButton);
+    text->setDefaultTextColor(Qt::white);
     text->setFont(QFont("Karantina",20));
 
 
@@ -69,7 +69,13 @@ void AnimerSerpent::keyPressEvent(QKeyEvent *event)
             text->setVisible(true);
         }
         else{
-            t->start(90);
+//            t->start(90);
+            if(jeu->b->stgNum == 0){
+                if(jeu->b->nivNum == 0)         jeu->serp->t->start(160);
+                else if(jeu->b->nivNum == 1)    jeu->serp->t->start(120);
+                else if(jeu->b->nivNum == 2)    jeu->serp->t->start(80);
+            }
+            else    jeu->serp->t->start(90);
             text->setVisible(false);
         }
 
@@ -80,7 +86,14 @@ void AnimerSerpent::keyPressEvent(QKeyEvent *event)
             jeu->afficherPause();
         }
         else{
-            t->start(90);
+//            t->start(90);
+            if(jeu->b->stgNum == 0){
+                if(jeu->b->nivNum == 0)         jeu->serp->t->start(160);
+                else if(jeu->b->nivNum == 1)    jeu->serp->t->start(120);
+                else if(jeu->b->nivNum == 2)    jeu->serp->t->start(80);
+            }
+            else    jeu->serp->t->start(90);
+
             if(jeu->pauseText != NULL)
             {
                 jeu->sceneDeJeu->removeItem(jeu->pauseText);

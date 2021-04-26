@@ -9,6 +9,7 @@ class Button :public QObject, public QGraphicsRectItem
     Q_OBJECT
 public:
     Button(QString name,int width, int height, QGraphicsItem * parent = NULL);
+    Button(QString name,int width, int height,int niveau, QGraphicsItem * parent = NULL);
     Button(QString name,int width, int height,int stg, bool locked, QGraphicsItem * parent = NULL);
 
 
@@ -18,7 +19,8 @@ public:
     void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
     void deletelock();
     void setHoverd();
-    int stgNum ;
+    int stgNum;
+    int nivNum;
 signals:
     void clicked();
     void clicked(int);
