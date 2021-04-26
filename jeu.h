@@ -57,7 +57,6 @@ public slots:
     void commancer();
     void routeurMenu();
     void stageSuiv();
-
 };
 
 #endif // JEU_H

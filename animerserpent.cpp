@@ -3,6 +3,7 @@
 #include <QDebug>
 #include <QRandomGenerator>
 #include <QTimer>
+#include <QThread>
 #include <qevent.h>
 #include "jeu.h"
 
@@ -59,8 +60,9 @@ void AnimerSerpent::keyPressEvent(QKeyEvent *event)
     }
     else if(event->key() == Qt::Key_Right && serpTete->Direction()  != "LEFT") {
             direction = "RIGHT";
+
     }
-    else if(event->key() == Qt::Key_Left && serpTete->Direction()  != "RIGHT") {
+    else if(event->key() == Qt::Key_Left && serpTete->Direction()  != "RIGHT" ) {
             direction = "LEFT";
     }
     else if(event->key() == Qt::Key_Space){
